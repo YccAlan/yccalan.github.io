@@ -14,7 +14,7 @@
   
 
 
-<html class="theme-next pisces use-motion" lang="zh-Hans">
+<html class="theme-next pisces use-motion" lang="zh-CN">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -112,7 +112,7 @@
 <meta property="og:title" content="yccalan">
 <meta property="og:url" content="https://yccalan.github.io/index.html">
 <meta property="og:site_name" content="yccalan">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale" content="zh-CN">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="yccalan">
 
@@ -171,7 +171,7 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
   
   
@@ -198,7 +198,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
+    <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -218,7 +218,7 @@
           
           <li class="menu-item menu-item-home menu-item-active">
     <a href="/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Startseite</a>
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
   </li>
         
         
@@ -226,7 +226,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
   </li>
         
         
@@ -234,7 +234,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archiv</a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
   </li>
 
       
@@ -324,14 +324,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
 
               
                 
               
 
-              <time title="Post created: 2018-08-02 14:24:24 / Updated at: 15:45:56" itemprop="dateCreated datePublished" datetime="2018-08-02T14:24:24+08:00">2018-08-02</time>
+              <time title="创建时间：2018-08-02 14:24:24 / 修改时间：16:32:40" itemprop="dateCreated datePublished" datetime="2018-08-02T14:24:24+08:00">2018-08-02</time>
             
 
             
@@ -386,169 +386,9 @@
 <p>部署<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure></p>
 <h3 id="部署的配置"><a href="#部署的配置" class="headerlink" title="部署的配置"></a>部署的配置</h3><p>要用<code>hexo d</code>命令部署到github.io上，需要修改站点的配置文件，即根目录的<code>_config.yml</code>。<br>deploy那一节，这样写：<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span> </span><br><span class="line"><span class="attr">    type:</span> <span class="string">git</span></span><br><span class="line"><span class="attr">    repo:</span> <span class="attr">https://&#123;uesrname&#125;:&#123;password&#125;@github.com/&#123;uesrname&#125;/&#123;uesrname&#125;.github.io.git</span></span><br><span class="line"><span class="attr">    branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure></p>
 <p><strong>这里有坑</strong>，和一些流行的旧教程不一样的是，repo的地址不能直接用github给的地址，否则会报错。（当然，这篇文章也总会过时的。）</p>
-<h2 id="选择主题"><a href="#选择主题" class="headerlink" title="选择主题"></a>选择主题</h2><p>Hexo的主题丰富，而且很多流行的主题是华人写的哇。<br>最出名的是next，但我觉得太普通了，见过的Hexo站点八成用的是这个吧。。。于是以美观简洁、持续维护的标准找了一圈，还是选了next。。。<br>next的功能丰富，还在探索中，会更新上来。</p>
-<h2 id="写文章"><a href="#写文章" class="headerlink" title="写文章"></a>写文章</h2><p>之前写markdown用的都是MarkdownPad2，在几个流行编辑器里算好用的吧。<br>写博客的话，还是想找一个更方便的，最好是能<strong>粘贴图片</strong>的。<br>于是就发现了HexoEditor，next主题作者写的，基于node.js。算是我接触的第一个node.js图形应用，安装略麻烦，启动略麻烦，很好看，很好用。小缺点是用微软拼音修改字母时看不到光标。来个例子：<br><img src="/建站记/20180802033031227.png" alt=""><br>其实光标已经在字母间了，但是看不到。</p>
+<h2 id="选择主题"><a href="#选择主题" class="headerlink" title="选择主题"></a>选择主题</h2><p>Hexo的主题丰富，很多流行的主题是华人写的。<br>最出名的是next，但我觉得太普通了，见过的Hexo站点八成用的是这个吧。。。于是以美观简洁、持续维护的标准找了一圈，还是选了next。。。<br>next的功能丰富，还在探索中，会更新上来。</p>
+<h2 id="写文章"><a href="#写文章" class="headerlink" title="写文章"></a>写文章</h2><p>之前写markdown用的都是MarkdownPad2，在几个流行编辑器里算好用的。<br>写博客的话，还是想找一个更方便的，最好是能<strong>粘贴图片</strong>的。<br>于是就发现了HexoEditor，next主题作者写的，基于node.js。算是我接触的第一个node.js图形应用，安装略麻烦，启动略麻烦，很好看，很好用。小缺点是用微软拼音修改字母时看不到光标。来个例子：<br><img src="/建站记/20180802033031227.png" alt=""><br>其实光标已经在字母间了，但是看不到。</p>
 <h2 id="感想"><a href="#感想" class="headerlink" title="感想"></a>感想</h2><p>又找到可以折腾的事了。。其实早就想弄个博客，一直没（bi）时（jiao）间（lan）。<br>Hexo确实很方便好用。<br>挺久没写markdown，是一种有点累、有点舒服的感觉。<br>希望能坚持写吧。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yccalan.github.io/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="yccalan">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yccalan">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/hello-world/" itemprop="url">
-                  Hello World
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-
-              
-                
-              
-
-              <time title="Post created: 2018-08-01 23:27:23" itemprop="dateCreated datePublished" datetime="2018-08-01T23:27:23+08:00">2018-08-01</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Updated at: 2018-08-02 14:27:55" itemprop="dateModified" datetime="2018-08-02T14:27:55+08:00">2018-08-02</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 
           
         
@@ -630,8 +470,8 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">2</span>
-                    <span class="site-state-item-name">Artikel</span>
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
               
@@ -650,7 +490,7 @@
                       
                     
                     <span class="site-state-item-count">2</span>
-                    <span class="site-state-item-name">Tags</span>
+                    <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
               
@@ -703,7 +543,7 @@
 
 
 
-  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
 
 
 
@@ -711,7 +551,7 @@
 
 
 
-  <div class="theme-info">Theme – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Pisces</a> v6.3.0</div>
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Pisces</a></div>
 
 
 
@@ -852,8 +692,6 @@
 
   
   
-    
-      
     
       
     
