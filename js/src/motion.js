@@ -214,7 +214,7 @@ $(document).ready(function() {
       $brand.length > 0 && sequence.push({
         e: $brand,
         p: {opacity: 1},
-        o: {duration: 100}
+        o: {duration: 0}
       });
 
       /**
