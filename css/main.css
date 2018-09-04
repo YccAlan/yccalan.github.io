@@ -1262,9 +1262,6 @@ pre .javascript .function {
   -o-transform: rotate(30deg);
   transform: rotate(30deg);
 }
-.use-motion .collection-title {
-  opacity: 0;
-}
 .posts-expand {
   padding-top: 40px;
 }
@@ -1841,7 +1838,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #cb624d;
+  background: #ffa1e0;
 }
 .links-of-blogroll {
   font-size: 13px;
