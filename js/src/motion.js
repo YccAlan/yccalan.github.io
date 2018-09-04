@@ -78,7 +78,7 @@ $(document).ready(function() {
   sidebarToggleLines.push(sidebarToggleLine3rd);
 
   var SIDEBAR_WIDTH = CONFIG.sidebar.width ? CONFIG.sidebar.width : '320px';
-  var SIDEBAR_DISPLAY_DURATION = 100;
+  var SIDEBAR_DISPLAY_DURATION = 20;
   var xPos, yPos;
 
   var sidebarToggleMotion = {
@@ -146,7 +146,7 @@ $(document).ready(function() {
           $('.sidebar .motion-element').velocity(
             'transition.slideRightIn',
             {
-              stagger : 25,
+              stagger : 10,
               drag    : true,
               complete: function() {
                 self.sidebarEl.trigger('sidebar.motion.complete');
@@ -214,7 +214,7 @@ $(document).ready(function() {
       $brand.length > 0 && sequence.push({
         e: $brand,
         p: {opacity: 1},
-        o: {duration: 100}
+        o: {duration: 0}
       });
 
       /**
@@ -234,7 +234,7 @@ $(document).ready(function() {
           e: $(element),
           p: {translateX: translateX},
           o: {
-            duration     : 250,
+            duration     : 0,
             sequenceQueue: false
           }
         };
@@ -249,13 +249,13 @@ $(document).ready(function() {
       hasElement($title) && sequence.push({
         e: $title,
         p: {opacity: 1, top: 0},
-        o: { duration: 100 }
+        o: { duration: 0 }
       });
 
       hasElement($subtitle) && sequence.push({
         e: $subtitle,
         p: {opacity: 1, top: 0},
-        o: {duration: 100}
+        o: {duration: 0}
       });
 
       if (CONFIG.motion.async) {
@@ -282,7 +282,8 @@ $(document).ready(function() {
 
       $('.menu-item').velocity('transition.slideDownIn', {
         display : null,
-        duration: 100,
+        duration: 1,
+		//0无效
         complete: function() {
           integrator.next();
         }
@@ -306,7 +307,7 @@ $(document).ready(function() {
 
       function postMotion() {
         var postMotionOptions = window.postMotionOptions || {
-          stagger: 50,
+          stagger: 10,
           drag   : true
         };
         postMotionOptions.complete = function() {
