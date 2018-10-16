@@ -114,7 +114,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://yccalan.github.io/学者信息问答系统的中期笔记/20181016061620663.png">
 <meta property="og:image" content="https://yccalan.github.io/学者信息问答系统的中期笔记/20181016061558001.png">
-<meta property="og:updated_time" content="2018-10-16T11:48:47.484Z">
+<meta property="og:updated_time" content="2018-10-16T11:49:57.727Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="学者信息问答系统的中期笔记">
 <meta name="twitter:description" content="引子开学的专业实习，我选定的题目是学者信息问答系统。因为它符合将来的研究方向，也能作为一个功能加入到当前导师开发的微信小程序中。 很可惜，虽然富于研究价值，但由于遇到了需要标注大量数据、功能不够实用等问题，半途中要改变选题，因此在此做一个中期记录。">
@@ -356,7 +356,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-10-16 19:48:47" itemprop="dateModified" datetime="2018-10-16T19:48:47+08:00">2018-10-16</time>
+                <time title="修改时间：2018-10-16 19:49:57" itemprop="dateModified" datetime="2018-10-16T19:49:57+08:00">2018-10-16</time>
               
             
           </span>
@@ -444,7 +444,7 @@
 <p>接下来就是数据的问题，为此，我又写了一个标注器，标注了近1000个句子。。。更尴尬的是后来发现学校名是硕士毕业学校的仅不到30个。。。</p>
 <p>我用类别权重来处理样本不平衡的问题，但由于正样本太少，正确在50%左右，需要找出更多正样本来改进结果。</p>
 <p>以上，是我在学者信息问答系统课题中所做的工作，由于题目的改动，暂时不继续做了。</p>
-<h1 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h1><p>最大的坑是jpype包的问题，在里面折腾了十多个小时吧。。。</p>
+<h2 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h2><p>最大的坑是jpype包的问题，在里面折腾了十多个小时吧。。。</p>
 <p>我在调试从简历提取硕士学校的代码时，报告JVM只能启动一次的错误。我知道pyhanlp在import时会调用<code>jpype.startJVM()</code>，并误以为Stanfordnlp也依赖jpype（实际上不依赖，代码里是先启动了一个Java服务端进程，再用python代码与之通信），就尝试了以下的方法：</p>
 <ul>
 <li>第二次启动JVM前先把它关掉。在函数中<a href="http://codingpy.com/article/python-import-101/" target="_blank" rel="noopener">局部导入</a>pyhanlp，在<code>import pyhanlp</code>语句前执行<code>jpype.shutdownJVM()</code>。然而不行，jpype文档的说法是“Because of lack of JVM support, you cannot shutdown the JVM and then restart it.”？？？（介绍python导入的文章说，局部导入没用处，这里处理包冲突的时候不就用到了嘛）</li>
@@ -645,7 +645,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#引子"><span class="nav-number">1.</span> <span class="nav-text">引子</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#研究方案"><span class="nav-number">2.</span> <span class="nav-text">研究方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#需求"><span class="nav-number">2.1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#答案来源"><span class="nav-number">2.2.</span> <span class="nav-text">答案来源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#答案匹配的基本思路"><span class="nav-number">2.3.</span> <span class="nav-text">答案匹配的基本思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#任务清单"><span class="nav-number">2.4.</span> <span class="nav-text">任务清单</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#研究过程"><span class="nav-number">3.</span> <span class="nav-text">研究过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#网页爬取"><span class="nav-number">3.1.</span> <span class="nav-text">网页爬取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正文提取"><span class="nav-number">3.2.</span> <span class="nav-text">正文提取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简历筛选器"><span class="nav-number">3.3.</span> <span class="nav-text">简历筛选器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本信息提取器"><span class="nav-number">3.4.</span> <span class="nav-text">基本信息提取器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#坑"><span class="nav-number">4.</span> <span class="nav-text">坑</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#感想"><span class="nav-number">5.</span> <span class="nav-text">感想</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#引子"><span class="nav-number">1.</span> <span class="nav-text">引子</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#研究方案"><span class="nav-number">2.</span> <span class="nav-text">研究方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#需求"><span class="nav-number">2.1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#答案来源"><span class="nav-number">2.2.</span> <span class="nav-text">答案来源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#答案匹配的基本思路"><span class="nav-number">2.3.</span> <span class="nav-text">答案匹配的基本思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#任务清单"><span class="nav-number">2.4.</span> <span class="nav-text">任务清单</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#研究过程"><span class="nav-number">3.</span> <span class="nav-text">研究过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#网页爬取"><span class="nav-number">3.1.</span> <span class="nav-text">网页爬取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正文提取"><span class="nav-number">3.2.</span> <span class="nav-text">正文提取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简历筛选器"><span class="nav-number">3.3.</span> <span class="nav-text">简历筛选器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本信息提取器"><span class="nav-number">3.4.</span> <span class="nav-text">基本信息提取器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#坑"><span class="nav-number">3.5.</span> <span class="nav-text">坑</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#感想"><span class="nav-number">4.</span> <span class="nav-text">感想</span></a></li></ol></div>
             
 
           </div>
