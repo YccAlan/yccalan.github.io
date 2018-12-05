@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=6.3.0">
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":null,"post_header":null,"post_body":null,"coll_header":null,"sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="最近用一个多月的时间看完了 Michael Collins 的 Natural Language Processing 课程视频。视频只有前面一小部分有英文字幕，后面连字幕也没有。。还好基本能听懂。Collins 大牛讲得深入浅出、耐心细致，非常适合用来入门nlp。 写下这个小结当作学习笔记吧。">
+<meta name="keywords" content="-nlp -笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Natural Language Processing by Michael Collins 小结">
+<meta property="og:url" content="https://yccalan.github.io/Natural-Language-Processing-by-Michael-Collins-小结/index.html">
+<meta property="og:site_name" content="yccalan">
+<meta property="og:description" content="最近用一个多月的时间看完了 Michael Collins 的 Natural Language Processing 课程视频。视频只有前面一小部分有英文字幕，后面连字幕也没有。。还好基本能听懂。Collins 大牛讲得深入浅出、耐心细致，非常适合用来入门nlp。 写下这个小结当作学习笔记吧。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://yccalan.github.io/Natural-Language-Processing-by-Michael-Collins-小结/20181203031345780.png">
+<meta property="og:image" content="https://yccalan.github.io/Natural-Language-Processing-by-Michael-Collins-小结/20181203031619679.png">
+<meta property="og:image" content="https://yccalan.github.io/Natural-Language-Processing-by-Michael-Collins-小结/20181203055202570.png">
+<meta property="og:image" content="https://yccalan.github.io/Natural-Language-Processing-by-Michael-Collins-小结/20181203062159957.png">
+<meta property="og:image" content="https://yccalan.github.io/Natural-Language-Processing-by-Michael-Collins-小结/20181204083023773.png">
+<meta property="og:image" content="https://yccalan.github.io/Natural-Language-Processing-by-Michael-Collins-小结/20181204083442079.png">
+<meta property="og:image" content="https://yccalan.github.io/Natural-Language-Processing-by-Michael-Collins-小结/20181204100244231.png">
+<meta property="og:image" content="https://yccalan.github.io/Natural-Language-Processing-by-Michael-Collins-小结/20181205064023567.png">
+<meta property="og:image" content="https://yccalan.github.io/Natural-Language-Processing-by-Michael-Collins-小结/20181205064058935.png">
+<meta property="og:updated_time" content="2018-12-05T11:54:55.548Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Natural Language Processing by Michael Collins 小结">
+<meta name="twitter:description" content="最近用一个多月的时间看完了 Michael Collins 的 Natural Language Processing 课程视频。视频只有前面一小部分有英文字幕，后面连字幕也没有。。还好基本能听懂。Collins 大牛讲得深入浅出、耐心细致，非常适合用来入门nlp。 写下这个小结当作学习笔记吧。">
+<meta name="twitter:image" content="https://yccalan.github.io/Natural-Language-Processing-by-Michael-Collins-小结/20181203031345780.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://yccalan.github.io/Natural-Language-Processing-by-Michael-Collins-小结/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Natural Language Processing by Michael Collins 小结 | yccalan</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-123284243-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-123284243-1');
+</script>
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">yccalan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yccalan.github.io/Natural-Language-Processing-by-Michael-Collins-小结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yccalan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yccalan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Natural Language Processing by Michael Collins 小结
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-12-03 13:42:06" itemprop="dateCreated datePublished" datetime="2018-12-03T13:42:06+08:00">2018-12-03</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-12-05 19:54:55" itemprop="dateModified" datetime="2018-12-05T19:54:55+08:00">2018-12-05</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">6.7k</span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近用一个多月的时间看完了 Michael Collins 的 Natural Language Processing 课程视频。视频只有前面一小部分有英文字幕，后面连字幕也没有。。还好基本能听懂。Collins 大牛讲得深入浅出、耐心细致，非常适合用来入门nlp。</p>
+<p>写下这个小结当作学习笔记吧。</p>
+<a id="more"></a>
+<h1 id="涉及的nlp问题"><a href="#涉及的nlp问题" class="headerlink" title="涉及的nlp问题"></a>涉及的nlp问题</h1><p>整个课程围绕着几个典型的nlp问题展开讨论，讲解的算法多种多样，但目标都是去更好地解决这些经典问题。</p>
+<h2 id="语言模型"><a href="#语言模型" class="headerlink" title="语言模型"></a>语言模型</h2><p>语言模型可以给出一个单词序列在某一语料库的背景下出现的概率，它用来估计一个单词序列有多少概率在语料库代表的语言环境中出现。</p>
+<p>即学习一个概率分布p，代表句子出现的概率，满足$\sum\limits_{x\in V} p(x)=1 \ ,p(x)\geq0$，其中$V$是无限大的字符串集合。</p>
+<p>常用的是简单的n元语法模型，它是用 Markov 假设简化的概率。<br>例如用 Second-Order Markov 假设得到的三元语法模型如下：</p>
+<p>$<br>\begin{aligned}<br>&amp;P(X_1=x_1,X_2=x_2,…X_n=x_n)\<br>=&amp;P(X_1=x_1)\times P(X_2=x_2|X_1=x_1)\times …\times P(X_n=x_n|X_1=x_1,…X_{n-1}=x_{n-1})\<br>\approx&amp; \prod\limits_{i=1}^n P(X_i|X_{i-1}=X_{i-1},X_{i-2}=x_{i-2})<br>\end{aligned}<br>$<br>定义$X_0=X_{-1}=<em> $，$ </em> $ 是起始符号。</p>
+<h2 id="标注"><a href="#标注" class="headerlink" title="标注"></a>标注</h2><p>标注是给句中的每个单词分配一个标签，课程涉及的是词性标注（POS）和命名实体识别（NER）。</p>
+<p>其中，NER是这样转化为标注问题的（引用PPT中的例子）：</p>
+<p>Profits/NA soared/NA at/NA Boeing/SC Co./CC ,/NA easily/NA<br>topping/NA forecasts/NA on/NA Wall/SL Street/CL ,/NA as/NA<br>their/NA CEO/NA Alan/SP Mulally/CP announced/NA first/NA<br>quarter/NA results/NA ./NA<br>NA = No entity<br>SC = Start Company<br>CC = Continue Company<br>SL = Start Location<br>CL = Continue Location</p>
+<h2 id="Parsing"><a href="#Parsing" class="headerlink" title="Parsing"></a>Parsing</h2><p>Parsing 是解析句子的结构，课程讨论了句法分析和依存句法分析。</p>
+<p>句法分析<br><img src="/Natural-Language-Processing-by-Michael-Collins-小结/20181203031345780.png" alt=""></p>
+<p>无标签的依存句法分析（每条弧指向单词的修饰，弧上没有标签）<br><img src="/Natural-Language-Processing-by-Michael-Collins-小结/20181203031619679.png" alt=""></p>
+<h1 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h1><p>课程介绍了多种算法来解决上述问题，其中的每一大类算法往往可以用于解决多个问题。我这里以算法为线索来介绍。</p>
+<h2 id="线性插值与打折算法"><a href="#线性插值与打折算法" class="headerlink" title="线性插值与打折算法"></a>线性插值与打折算法</h2><p>线性插值和打折算法可以用来解决n元语言模型的数据稀疏问题。</p>
+<p>例如，对于三元语法，由于三元组的组合很多，而数据有限，有些三元组的计数非常少或者为0，这会导致包含这个三元组的句子的概率非常小，偏离实际情况。</p>
+<h3 id="线性插值"><a href="#线性插值" class="headerlink" title="线性插值"></a>线性插值</h3><p>线性插值将几种n元语法线性混合：<br>$<br>\begin{aligned}<br>q(w_i|w_{i-1},w_{i-2})= &amp; \lambda_1 \times q_{ML}(w_i|w_{i-1},w_{i-2}) \times \<br>&amp; \lambda_2 \times q_{ML}(w_i|w_{i-1}) \times \<br>&amp; \lambda_3 \times q_{ML}(w_i) \<br>where\ \lambda_1+\lambda_2+\lambda_3=1, and\ \lambda_i\geq0 \ for\ all\ i<br>\end{aligned}<br>$</p>
+<p>可以证明，混合后的语言模型是一个概率分布。<br>$\lambda$的取值可以由模型在验证集上的似然确定。</p>
+<h3 id="打折算法"><a href="#打折算法" class="headerlink" title="打折算法"></a>打折算法</h3><p>一些低频三元组的出现概率可导致其频率计数总是记为0，比如当其概率远小于三元组数量的倒数时。这是可以将其它三元组的概率扣掉一部分，按某种比例分配给计数为0的三元组。</p>
+<p>Katz Back-Off 的二元组模型将计数大于0的二元组的计数打折，匀出的概率按一元组的计数分配给计数等于0的二元组。<br>类似地，Katz Back-Off 的三元组模型将计数大于0的三元组的计数打折，匀出的概率按上述的二元组计数分配给计数等于0的三元组。</p>
+<h2 id="Markov-过程与-Viterbi-算法：求解序列标注问题"><a href="#Markov-过程与-Viterbi-算法：求解序列标注问题" class="headerlink" title="Markov 过程与 Viterbi 算法：求解序列标注问题"></a>Markov 过程与 Viterbi 算法：求解序列标注问题</h2><p>Markov 过程与 Viterbi 算法是息息相关的。Markov 假设将问题简化，往往使其具有动态规划问题的性质。而求解这类问题的动态规划算法就叫 Viterbi 算法。</p>
+<h3 id="Markov-过程"><a href="#Markov-过程" class="headerlink" title="Markov 过程"></a>Markov 过程</h3><p>对于一个随机变量序列$X_1,X_2,…,X_n$。<br>如果$p(X_i=x_i|X_1=x_1,X_2=x_2,…,X_{i-1}=x_{i-1})=p(X_i=x_i|X_{i-1}=x_{i-1})$，称为一阶 Markov 过程。<br>如果$p(X_i=x_i|X_1=x_1,X_2=x_2,…,X_{i-1}=x_{i-1})=p(X_i=x_i|X_{i-2}=x_{i-2},X_{i-1}=x_{i-1})$，称为二阶 Markov 过程。<br>即第i个随机变量的取值只与其之前若干个随机变量的取值相关。<br>这里已经能感受到和动态规划算法的联系了。</p>
+<p><span id="HMM"></span></p>
+<h3 id="Hidden-Markov-Model"><a href="#Hidden-Markov-Model" class="headerlink" title="Hidden Markov Model"></a>Hidden Markov Model</h3><p>Hidden Markov Model 定义了这样的过程：存在一组满足 Markov 假设的状态序列$X_1,X_2,…,X_n$，每个状态对应一个输出，其概率分布满足$p(y_i|x_i)=e(y_i|x_i)$，于是得到了一个观察序列$Y_1,Y_2,…,Y_n$</p>
+<p>对于标注问题，我们可以这样假设，使它符合HMM：标注序列为HMM的状态序列，句子为HMM的观察序列，而 Morkov 状态转移的概率和输出概率是从训练集中学习得到的。那么标注的过程即为根据观察序列和HMM参数求解状态序列的过程，称为解码。</p>
+<p>用于标注问题的 Trigram HMMs 定义为：<br>$<br>\begin{aligned}<br>&amp;p(x_1…x_{n+1},y_1…y_n)=\prod\limits_{i=1}^{n+1} q(x_i|x_{i-2},x_{i-1}) \prod\limits_{i=1}^{n} e(y_i|x_i) \<br>&amp;where\ x_0=x_{-1}=* , and\ x_{n+1}=STOP<br>\end{aligned}<br>$</p>
+<p>$x_1…x_{n+1}$是标注序列，$y_1…y_n$是句子。</p>
+<h3 id="Viterbi-算法"><a href="#Viterbi-算法" class="headerlink" title="Viterbi 算法"></a>Viterbi 算法</h3><p>Viterbi 算法是一种动态规划算法，给定观察序列（句子）和HMM参数，它能找出概率最大的状态序列（标注序列）。这算是一个简单的动态规划问题了。</p>
+<p>最优子结构定义为$f(k,u,v)$，表示满足$x_{k-1}=u,x_k=v$的前$k$个状态序列能获得的最大概率。</p>
+<p>状态转移方程为：<br>$f(k,u,v)=\max\limits_{w\in S_k-2} f(k-1,w,u)q(v|w,u)e(y_k|v)$<br>$S_{k-2}$是$X_{k-2}$的取值集合。</p>
+<h3 id="标注问题的HMM参数估计"><a href="#标注问题的HMM参数估计" class="headerlink" title="标注问题的HMM参数估计"></a>标注问题的HMM参数估计</h3><p>可以用语言模型中所用的线性插值和打折算法。</p>
+<p>对于低频词，有更好的办法————根据单词的拼写特征，把它们归入一些大类中。</p>
+<p><img src="/Natural-Language-Processing-by-Michael-Collins-小结/20181203055202570.png" alt=""></p>
+<h2 id="概率上下文无关语法（PCFG）与-CKY-算法：求解句法分析问题"><a href="#概率上下文无关语法（PCFG）与-CKY-算法：求解句法分析问题" class="headerlink" title="概率上下文无关语法（PCFG）与 CKY 算法：求解句法分析问题"></a>概率上下文无关语法（PCFG）与 CKY 算法：求解句法分析问题</h2><p>通过POS，我们可以得到句子中每个单词对应的词性序列。如果定义出一组从起始符号推导出词性序列的语法规则，就可以用语法分析算法构建 parsing tree。</p>
+<p>但与编程所用的 CFG 不同，自然语言存在着大量的歧义，因此，学者提出了概率上下文无关语法（PCFG）。<br>而选择出一组推导方案，使句子的出现概率最大的算法之一是CKY算法，同样是一种DP算法。</p>
+<h3 id="概率上下文无关语法"><a href="#概率上下文无关语法" class="headerlink" title="概率上下文无关语法"></a>概率上下文无关语法</h3><p>PCFG为每条推导规则定义了概率。<br><img src="/Natural-Language-Processing-by-Michael-Collins-小结/20181203062159957.png" alt=""></p>
+<h3 id="CKY-算法"><a href="#CKY-算法" class="headerlink" title="CKY 算法"></a>CKY 算法</h3><p>CKY 算法能找出一组推到规则，使生成句子的概率最大。<br>它要求所用的 CFG 符合 Chomsky 标准形式，它要求推导规则为以下两种形式之一：</p>
+<ol>
+<li>$X\rightarrow Y_1Y_2$，其中$Y_1,Y_2$是非终结符。</li>
+<li>$X\rightarrow Y$，其中$Y$是终结符。</li>
+</ol>
+<p>显然，PCFG都可以转化为上述 Chomsky 标准形式。</p>
+<p>CKY 算法是动态规划算法，思想类似矩阵连乘积。</p>
+<p>问题的最优子结构$f(i,j,X)$表示非终结符$X$生成句子子串$x_i…x_j$的最大概率。</p>
+<p>状态转移方程：<br>$f(i,j,X)=\max\limits_{X\rightarrow YZ\in R,s \in {i…i-1}} q(X\rightarrow YZ)f(i,s,Y)f(s+1,j,Z)$</p>
+<h3 id="Lexicalized-PCFGs"><a href="#Lexicalized-PCFGs" class="headerlink" title="Lexicalized PCFGs"></a>Lexicalized PCFGs</h3><p>PCFG 处理不好短语的附着问题，因为改变短语的修饰对象往往不影响句子的概率。<br>Lexicalized PCFGs 给语法规则引入了更多的语义信息，从而提高精确度。</p>
+<p>Lexicalized PCFGs 为每个推导规则指定了一个 head ，作为规则的中心成分。左侧的非终结符会继承右侧标记为 head 的非终结符的语义标记（一个单词）。<br><img src="/Natural-Language-Processing-by-Michael-Collins-小结/20181204083023773.png" alt=""></p>
+<p>于是，句子的语法树扩充成了下图：<br><img src="/Natural-Language-Processing-by-Michael-Collins-小结/20181204083442079.png" alt=""></p>
+<p>非终结符也需要被扩充，加上语义标记（非终结符对应的句子中的某个单词）的修饰了。<br>如$S(saw) \rightarrow_2 NP(man) VP(saw)$，箭头的下标2表示右侧的第二个非终结符是 head。</p>
+<p>Lexicalized PCFGs的参数成倍的增加了，因此用下面的假设来估计参数：<br>$<br>\begin{aligned}<br>&amp;q(S(saw) \rightarrow_2 NP(man) VP(saw)) \<br>=&amp;q(S \rightarrow_2 NP\ VP | S,saw) \times q(man | S \rightarrow_2 NP\ VP ,saw)\<br>=&amp;(\lambda_1 \times q_{ML}(S \rightarrow_2 NP\ VP | S,saw) \times \lambda_2 \times q_{ML}(S \rightarrow_2 NP\ VP | S)) \times \<br>&amp;(\lambda_3 \times q_{ML}(man | S \rightarrow_2 NP\ VP ,saw) \times \lambda_4 \times q_{ML}(man | S \rightarrow_2 NP\ VP) \times \lambda_5 \times q_{ML}(man|NP))<br>\end{aligned}<br>$</p>
+<p>Lexicalized PCFGs 同样使用 CKY 算法求解推导规则。</p>
+<h2 id="Log-Linear-Models"><a href="#Log-Linear-Models" class="headerlink" title="Log-Linear Models"></a>Log-Linear Models</h2><p>Log-Linear Model 是一类概率预测模型，它假设（样本，类别）元组的特征向量与参数向量的内积与分类正确的概率的对数值成正比。</p>
+<p>由于这是机器学习的经典算法，这里关注模型的思想，然后介绍在 nlp 领域的应用。</p>
+<h3 id="Log-Linear-Models-与最大熵模型"><a href="#Log-Linear-Models-与最大熵模型" class="headerlink" title="Log-Linear Models 与最大熵模型"></a>Log-Linear Models 与最大熵模型</h3><p>Log-Linear Models 定义了特征函数$f$和参数向量$v$，做出如下假设：<br>$p(y|x;v)=\frac{e^{v \cdot f(x,y)}}{\sum\limits_{y’\in Y}e^{v \cdot f(x,y’)}}$</p>
+<p>我们使用极大似然估计确定参数$v$，对数似然函数为：<br>$L(v)=\sum\limits_{i=1}^{n}\log p(y_i|x_i;v)$</p>
+<p>似然函数看似复杂，梯度上升法求解$v$的公式却比较简单：<br><img src="/Natural-Language-Processing-by-Michael-Collins-小结/20181204100244231.png" alt=""></p>
+<p>对数似然模型也叫<strong>最大熵模型</strong>，它们是等价的。</p>
+<p>最大熵模型寻找的是的是满足以下两个条件的$p(y|x)$表达式：</p>
+<ol>
+<li>对于每个特征，它对每个样本(x,y)的期望等于模型预测的该特征的期望$\sum\limits_{x,y}\overline{p}(x,y)f_i(x,y)=\sum\limits_x \overline{p}(x)p(y|x)f_i(x,y)$</li>
+<li>条件熵最大$H(p)=-\sum\limits_{x}\overline{p}(x)\sum\limits_{y}p(y|x)\log p(y|x)$</li>
+</ol>
+<p>条件1保证了从每个特征的角度看，模型的预测与训练集相符。这构成了一个方程组，我们希望用已知的$\overline{p}$和$f_i$来表达$p(y|x)$。<br>但是$x,y$的组合很多，导致条件1的方程组不足以确定全部的$p(y|x)$。条件2限定只取条件熵最大的一组解。这实际上保证了只要特征相同，样本的概率分布就相同，模型不考虑样本除了特征以外的因素。</p>
+<p>经过推导，以上两个条件的解正是$p(y|x)=\frac{e^{v \cdot f(x,y)}}{\sum\limits_{y’\in Y}e^{v \cdot f(x,y’)}}$，$v$是使$L(v)=\sum\limits_{i=1}^{n}\log p(y_i|x_i;v)$最大化的向量，这就是对数似然模型的两个式子，因此两者是等价的。</p>
+<p>因此，对数似然模型的假设$p(y|x)=\frac{e^{v \cdot f(x,y)}}{\sum\limits_{y’\in Y}e^{v \cdot f(x,y’)}}$，隐含了这样的假设：样本集的每个特征的期望$\mathrm{E}_{f_i}$就是预测对象的期望，并且除了这些特征外，没有其他影响分类的因素。</p>
+<p>这样的假设太强了，在实际问题中难以达到。因此，很多只对$p(y|x)$的形式作出假设，并用极大似然解出参数的模型，也能取得很好甚至更好的表现。</p>
+<h3 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h3><p>如果在训练集中，具有某一特征$f_i$的样本都属于同一类，那么$v_i$会趋于无穷大，这是不合理的。因此，引入了新的假设——参数$v$服从均值为0的高斯分布。</p>
+<p>于是，似然函数增加了正则项：<br>$L(v)=\sum\limits_{i=1}^{n}\log p(y_i|x_i;v)-\frac{\lambda}{2}\sum\limits_{k=1}^m  v_k^2$</p>
+<h3 id="用于标注的-Log-Linear-Models：最大熵-Markov-模型（MEMMs）"><a href="#用于标注的-Log-Linear-Models：最大熵-Markov-模型（MEMMs）" class="headerlink" title="用于标注的 Log-Linear Models：最大熵 Markov 模型（MEMMs）"></a>用于标注的 Log-Linear Models：最大熵 Markov 模型（MEMMs）</h3><p>我们使用与<a href="#HMM">之前的 HMM 模型</a>相似的独立性假设：<br>$<br>\begin{aligned}<br>p(t_{[1:n]}|w_{[1:n]})= &amp; \prod_{i=1}^n p(t_i|t_{[1:i-1]},w_{[1:n]}) \<br>=&amp; \prod_{i=1}^n p(t_i|t_{i-2},t_{i-1},w_{[1:n]})<br>\end{aligned}<br>$</p>
+<p>而$p(t_i|t_{i-2},t_{i-1},w_{[1:n]})$可以使用 Log-Linear Models 来估计。<br>定义四元组$&lt;t_{i-2},t_{i-1},w_{[1:n]},i&gt;$为历史，模型根据每个位置上的历史来预测该位置标签的概率分布。</p>
+<p>对于POS标注，可以这样定义特征：<br><img src="/Natural-Language-Processing-by-Michael-Collins-小结/20181205064023567.png" alt=""><br><img src="/Natural-Language-Processing-by-Michael-Collins-小结/20181205064058935.png" alt=""></p>
+<p>用于 MEMM 的 Viterbi 算法也与 HMM 模型的非常类似，不再讨论了。<br>实际上，这一模型只是替换了 HMM 中预测$p(t_i|t_{i-2},t_{i-1},w_{[1:n]})$的方式，允许引入更丰富的特征。</p>
+<p><strong>计算细节</strong><br>由于前后几个单词的任意组合被包含在特征中，特征的数量是非常大的，$v$的计算复杂度非常高。实际上，由于是稀疏的01特征，一个样本$(x,y)$只有少数特征是为1的。我们不用显式地计算出样本的特征向量$f$，只需确定$f$的哪些位置为1即可。</p>
+<h3 id="用于-Parsing-的-Log-Linear-Model：Ratnaparkhi’s-Parser"><a href="#用于-Parsing-的-Log-Linear-Model：Ratnaparkhi’s-Parser" class="headerlink" title="用于 Parsing 的 Log-Linear Model：Ratnaparkhi’s Parser"></a>用于 Parsing 的 Log-Linear Model：Ratnaparkhi’s Parser</h3><p>Ratnaparkhi 把语法树表示为一系列的决策序列。模型根据句子和全部的历史决策来预测下一个决策的概率分布。<br>由于预测是基于从全部的历史决策提取的特征，因此无法应用动态规划算法，而是使用 beam search 这种启发式搜索算法。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/nlp-笔记/" rel="tag"># -nlp -笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/学者信息问答系统的中期笔记/" rel="next" title="学者信息问答系统的中期笔记">
+                <i class="fa fa-chevron-left"></i> 学者信息问答系统的中期笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="yccalan" />
+            
+              <p class="site-author-name" itemprop="name">yccalan</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#涉及的nlp问题"><span class="nav-number">1.</span> <span class="nav-text">涉及的nlp问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#语言模型"><span class="nav-number">1.1.</span> <span class="nav-text">语言模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标注"><span class="nav-number">1.2.</span> <span class="nav-text">标注</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Parsing"><span class="nav-number">1.3.</span> <span class="nav-text">Parsing</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法"><span class="nav-number">2.</span> <span class="nav-text">算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#线性插值与打折算法"><span class="nav-number">2.1.</span> <span class="nav-text">线性插值与打折算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#线性插值"><span class="nav-number">2.1.1.</span> <span class="nav-text">线性插值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#打折算法"><span class="nav-number">2.1.2.</span> <span class="nav-text">打折算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Markov-过程与-Viterbi-算法：求解序列标注问题"><span class="nav-number">2.2.</span> <span class="nav-text">Markov 过程与 Viterbi 算法：求解序列标注问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Markov-过程"><span class="nav-number">2.2.1.</span> <span class="nav-text">Markov 过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hidden-Markov-Model"><span class="nav-number">2.2.2.</span> <span class="nav-text">Hidden Markov Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Viterbi-算法"><span class="nav-number">2.2.3.</span> <span class="nav-text">Viterbi 算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标注问题的HMM参数估计"><span class="nav-number">2.2.4.</span> <span class="nav-text">标注问题的HMM参数估计</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概率上下文无关语法（PCFG）与-CKY-算法：求解句法分析问题"><span class="nav-number">2.3.</span> <span class="nav-text">概率上下文无关语法（PCFG）与 CKY 算法：求解句法分析问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概率上下文无关语法"><span class="nav-number">2.3.1.</span> <span class="nav-text">概率上下文无关语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CKY-算法"><span class="nav-number">2.3.2.</span> <span class="nav-text">CKY 算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lexicalized-PCFGs"><span class="nav-number">2.3.3.</span> <span class="nav-text">Lexicalized PCFGs</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Log-Linear-Models"><span class="nav-number">2.4.</span> <span class="nav-text">Log-Linear Models</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Log-Linear-Models-与最大熵模型"><span class="nav-number">2.4.1.</span> <span class="nav-text">Log-Linear Models 与最大熵模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正则化"><span class="nav-number">2.4.2.</span> <span class="nav-text">正则化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用于标注的-Log-Linear-Models：最大熵-Markov-模型（MEMMs）"><span class="nav-number">2.4.3.</span> <span class="nav-text">用于标注的 Log-Linear Models：最大熵 Markov 模型（MEMMs）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用于-Parsing-的-Log-Linear-Model：Ratnaparkhi’s-Parser"><span class="nav-number">2.4.4.</span> <span class="nav-text">用于 Parsing 的 Log-Linear Model：Ratnaparkhi’s Parser</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yccalan</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Pisces</a></div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'https://yccalan.github.io/Natural-Language-Processing-by-Michael-Collins-小结/';
+        this.page.identifier = 'Natural-Language-Processing-by-Michael-Collins-小结/';
+        this.page.title = 'Natural Language Processing by Michael Collins 小结';
+        };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://yccalan-blog-github.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        loadComments();
+      
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
