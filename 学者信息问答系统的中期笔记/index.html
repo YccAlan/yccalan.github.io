@@ -104,20 +104,20 @@
 
 
 
-  <meta name="description" content="引子 开学的专业实习，我选定的题目是学者信息问答系统。因为它符合将来的研究方向，也能作为一个功能加入到当前导师开发的微信小程序中。 很可惜，虽然富于研究价值，但由于遇到了需要标注大量数据、功能不够实用等问题，半途中要改变选题，因此在此做一个中期记录。">
+  <meta name="description" content="引子开学的专业实习，我选定的题目是学者信息问答系统。因为它符合将来的研究方向，也能作为一个功能加入到当前导师开发的微信小程序中。 很可惜，虽然富于研究价值，但由于遇到了需要标注大量数据、功能不够实用等问题，半途中要改变选题，因此在此做一个中期记录。">
 <meta name="keywords" content="笔记,nlp">
 <meta property="og:type" content="article">
 <meta property="og:title" content="学者信息问答系统的中期笔记">
 <meta property="og:url" content="https://yccalan.github.io/学者信息问答系统的中期笔记/index.html">
 <meta property="og:site_name" content="yccalan">
-<meta property="og:description" content="引子 开学的专业实习，我选定的题目是学者信息问答系统。因为它符合将来的研究方向，也能作为一个功能加入到当前导师开发的微信小程序中。 很可惜，虽然富于研究价值，但由于遇到了需要标注大量数据、功能不够实用等问题，半途中要改变选题，因此在此做一个中期记录。">
+<meta property="og:description" content="引子开学的专业实习，我选定的题目是学者信息问答系统。因为它符合将来的研究方向，也能作为一个功能加入到当前导师开发的微信小程序中。 很可惜，虽然富于研究价值，但由于遇到了需要标注大量数据、功能不够实用等问题，半途中要改变选题，因此在此做一个中期记录。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://yccalan.github.io/学者信息问答系统的中期笔记/20181016061620663.png">
 <meta property="og:image" content="https://yccalan.github.io/学者信息问答系统的中期笔记/20181016061558001.png">
 <meta property="og:updated_time" content="2018-10-16T11:49:57.727Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="学者信息问答系统的中期笔记">
-<meta name="twitter:description" content="引子 开学的专业实习，我选定的题目是学者信息问答系统。因为它符合将来的研究方向，也能作为一个功能加入到当前导师开发的微信小程序中。 很可惜，虽然富于研究价值，但由于遇到了需要标注大量数据、功能不够实用等问题，半途中要改变选题，因此在此做一个中期记录。">
+<meta name="twitter:description" content="引子开学的专业实习，我选定的题目是学者信息问答系统。因为它符合将来的研究方向，也能作为一个功能加入到当前导师开发的微信小程序中。 很可惜，虽然富于研究价值，但由于遇到了需要标注大量数据、功能不够实用等问题，半途中要改变选题，因此在此做一个中期记录。">
 <meta name="twitter:image" content="https://yccalan.github.io/学者信息问答系统的中期笔记/20181016061620663.png">
 
 
@@ -383,7 +383,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">3.5k</span>
+                <span title="本文字数">3.4k</span>
               
 
               
@@ -407,46 +407,62 @@
       
 
       
-        <h1 id="引子">引子</h1>
-<p>开学的专业实习，我选定的题目是学者信息问答系统。因为它符合将来的研究方向，也能作为一个功能加入到当前导师开发的微信小程序中。</p>
+        <h1 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h1><p>开学的专业实习，我选定的题目是学者信息问答系统。因为它符合将来的研究方向，也能作为一个功能加入到当前导师开发的微信小程序中。</p>
 <p>很可惜，虽然富于研究价值，但由于遇到了需要标注大量数据、功能不够实用等问题，半途中要改变选题，因此在此做一个中期记录。</p>
 <a id="more"></a>
-<h1 id="研究方案">研究方案</h1>
-<h2 id="需求">需求</h2>
-<p>首先需要明确问答系统的需求。实现这个问答系统的目的，是可以针对学者的相关提问作出回答，例如学者的学历、毕业学校、研究兴趣等等。</p>
-<p>由于现有的答案生成模型效果一般，这一问答系统是根据问题，在答案库里找出答案，作为回答。 ## 答案来源 在选题时，并没有学者信息的相关数据资源，因此答案均来源于网络。</p>
-<p>有两种爬取数据的方法： * 针对某一学者信息网站，编写特定的爬取器，可以获得结构化学者数据 * 按照搜索引擎的返回结果进行爬取，需要编写筛选器找出学者的相关信息</p>
+<h1 id="研究方案"><a href="#研究方案" class="headerlink" title="研究方案"></a>研究方案</h1><h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>首先需要明确问答系统的需求。实现这个问答系统的目的，是可以针对学者的相关提问作出回答，例如学者的学历、毕业学校、研究兴趣等等。</p>
+<p>由于现有的答案生成模型效果一般，这一问答系统是根据问题，在答案库里找出答案，作为回答。</p>
+<h2 id="答案来源"><a href="#答案来源" class="headerlink" title="答案来源"></a>答案来源</h2><p>在选题时，并没有学者信息的相关数据资源，因此答案均来源于网络。</p>
+<p>有两种爬取数据的方法：</p>
+<ul>
+<li>针对某一学者信息网站，编写特定的爬取器，可以获得结构化学者数据</li>
+<li>按照搜索引擎的返回结果进行爬取，需要编写筛选器找出学者的相关信息</li>
+</ul>
 <p>我首先实现的是第二种，因为更具一般性，而前者可以作为后者的补充。</p>
-<h2 id="答案匹配的基本思路">答案匹配的基本思路</h2>
-<p>简单的答案匹配模型一般是一个神经网络，输入问句和答句，输出匹配程度。</p>
-<p><img src="/学者信息问答系统的中期笔记/20181016061620663.png"></p>
+<h2 id="答案匹配的基本思路"><a href="#答案匹配的基本思路" class="headerlink" title="答案匹配的基本思路"></a>答案匹配的基本思路</h2><p>简单的答案匹配模型一般是一个神经网络，输入问句和答句，输出匹配程度。</p>
+<p><img src="/学者信息问答系统的中期笔记/20181016061620663.png" alt=""></p>
 <p>由于数据有限（需要自己准备数据，且很难迁移学习），我预计匹配的效果不会很好。</p>
 <p>同时，我注意到关于学者的问题多数都围绕着学历、职称、研究方向等简历上的常见信息。这类问题可以单独处理：预先针对常见问题，训练提取器，从学者的介绍文本中提取数据，保存在数据库中。回答问题时，判断问题是否属于这类问题的某一类别，是的话直接从数据库中给出答案。</p>
-<p><img src="/学者信息问答系统的中期笔记/20181016061558001.png"></p>
-<p>综上，答案匹配的过程如下： 1. 判断问句是否在询问常见信息 2. 若是，判断问题的类别，利用数据库中的数据给出答案。如果数据库中没有数据，则通过搜索引擎爬取简历，再利用筛选器找出常见信息。 3. 若否，利用搜索引擎搜索问句，将结果中的句子与问题一一比对，找到最匹配的句子作为答案。</p>
-<h2 id="任务清单">任务清单</h2>
-<p>经过以上分析，需要完成的组件挺多的，列举如下： * 网页爬取器 * 正文提取器 * 简历筛选器：判断文本是否为简历 * 多个基本信息提取器，从文本中提取职称、毕业学校、研究方向等简历中常提到、用户常问到的信息 * 答案匹配模型，我想先试试<a href="https://kexue.fm/archives/5409" target="_blank" rel="noopener">这个</a></p>
-<h1 id="研究过程">研究过程</h1>
-<h2 id="网页爬取">网页爬取</h2>
-<p>利用了google custom search api，每天有1000个免费请求。这个api是针对特定网站进行搜索的，但可以加入全网的搜索结果，曲线救国。</p>
-<h2 id="正文提取">正文提取</h2>
-<p>存在着提取网页正文的库，我尝试了三个： * boiler pipe * goose3 * 行列布局提取</p>
+<p><img src="/学者信息问答系统的中期笔记/20181016061558001.png" alt=""></p>
+<p>综上，答案匹配的过程如下：</p>
+<ol>
+<li>判断问句是否在询问常见信息</li>
+<li>若是，判断问题的类别，利用数据库中的数据给出答案。如果数据库中没有数据，则通过搜索引擎爬取简历，再利用筛选器找出常见信息。</li>
+<li>若否，利用搜索引擎搜索问句，将结果中的句子与问题一一比对，找到最匹配的句子作为答案。</li>
+</ol>
+<h2 id="任务清单"><a href="#任务清单" class="headerlink" title="任务清单"></a>任务清单</h2><p>经过以上分析，需要完成的组件挺多的，列举如下：</p>
+<ul>
+<li>网页爬取器</li>
+<li>正文提取器</li>
+<li>简历筛选器：判断文本是否为简历</li>
+<li>多个基本信息提取器，从文本中提取职称、毕业学校、研究方向等简历中常提到、用户常问到的信息</li>
+<li>答案匹配模型，我想先试试<a href="https://kexue.fm/archives/5409" target="_blank" rel="noopener">这个</a></li>
+</ul>
+<h1 id="研究过程"><a href="#研究过程" class="headerlink" title="研究过程"></a>研究过程</h1><h2 id="网页爬取"><a href="#网页爬取" class="headerlink" title="网页爬取"></a>网页爬取</h2><p>利用了google custom search api，每天有1000个免费请求。这个api是针对特定网站进行搜索的，但可以加入全网的搜索结果，曲线救国。</p>
+<h2 id="正文提取"><a href="#正文提取" class="headerlink" title="正文提取"></a>正文提取</h2><p>存在着提取网页正文的库，我尝试了三个：</p>
+<ul>
+<li>boiler pipe</li>
+<li>goose3</li>
+<li>行列布局提取</li>
+</ul>
 <p>效果都不好，因为网页中包含的是简历，与一般的文章不同，最后自己写了一个。</p>
-<h2 id="简历筛选器">简历筛选器</h2>
-<p>我用“名字+学校”来搜索简历。研究过程中发现，排在前面的搜索结果也可能包含新闻等其他内容，需要进行筛选。</p>
-<p>得到分类器的过程如下： 1. 从训练集中提取高频词 2. 计算每份文本的高频词在训练集中的TfIdf值，作为其特征 3. 拟合逻辑回归模型</p>
+<h2 id="简历筛选器"><a href="#简历筛选器" class="headerlink" title="简历筛选器"></a>简历筛选器</h2><p>我用“名字+学校”来搜索简历。研究过程中发现，排在前面的搜索结果也可能包含新闻等其他内容，需要进行筛选。</p>
+<p>得到分类器的过程如下：</p>
+<ol>
+<li>从训练集中提取高频词</li>
+<li>计算每份文本的高频词在训练集中的TfIdf值，作为其特征</li>
+<li>拟合逻辑回归模型</li>
+</ol>
 <p>可以参考<a href="https://www.jianshu.com/p/dc00a5d597ed" target="_blank" rel="noopener">这篇文章</a>。</p>
 <p>数据集是我自己分的。为了提高标注效率，不看花眼，还写了一个标注器。（事实上，一共写了三个标注器。）标注器采用简单的tkinter框架，写起来方便，但感觉接口设计和文档都比较简陋。</p>
-<h2 id="基本信息提取器">基本信息提取器</h2>
-<p>我是以“硕士毕业学校”为切入点进行研究。后来才发现不少老师没有硕士毕业学校，因为是直博的。。。</p>
+<h2 id="基本信息提取器"><a href="#基本信息提取器" class="headerlink" title="基本信息提取器"></a>基本信息提取器</h2><p>我是以“硕士毕业学校”为切入点进行研究。后来才发现不少老师没有硕士毕业学校，因为是直博的。。。</p>
 <p>首先想到的模型是，输入一串词，输出硕士毕业学校的起止位置。但一个句子里可能会出现多次答案，产生干扰，模型的注意力也可能分散在学校名称上，但学校叫什么并不重要。我确定的提取思路是：先找出包含学校名称的句子，将学校名替换成一个符号，然后分词、向量化，送入分类器识别，判断符号是否代表了硕士毕业学校。</p>
 <p>起初我想找一个学校清单，但没发现囊括了国内外高校的清单，而且这种罗列的方式虽然准确但难以推广、不够优美。我换用命名实体识别的办法，找出包含“学校”、“学院”、“研究所”字样的所有机构名，应该可以基本覆盖简历中出现的学校。</p>
 <p>由于数据有限，我选择用简单的模型，和<a href="https://github.com/Embedding/Chinese-Word-Vectors" target="_blank" rel="noopener">训练好的词向量</a>。模型用的是<a href="https://blog.csdn.net/u013713117/article/details/55049808" target="_blank" rel="noopener">CNN</a>，窗口宽度与词向量等长，数据填0对齐。</p>
 <p>接下来就是数据的问题，为此，我又写了一个标注器，标注了近1000个句子。。。更尴尬的是后来发现学校名是硕士毕业学校的仅不到30个。。。</p>
 <p>我用类别权重来处理样本不平衡的问题，但由于正样本太少，正确在50%左右，需要找出更多正样本来改进结果。</p>
 <p>以上，是我在学者信息问答系统课题中所做的工作，由于题目的改动，暂时不继续做了。</p>
-<h2 id="坑">坑</h2>
-<p>最大的坑是jpype包的问题，在里面折腾了十多个小时吧。。。</p>
+<h2 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h2><p>最大的坑是jpype包的问题，在里面折腾了十多个小时吧。。。</p>
 <p>我在调试从简历提取硕士学校的代码时，报告JVM只能启动一次的错误。我知道pyhanlp在import时会调用<code>jpype.startJVM()</code>，并误以为Stanfordnlp也依赖jpype（实际上不依赖，代码里是先启动了一个Java服务端进程，再用python代码与之通信），就尝试了以下的方法：</p>
 <ul>
 <li>第二次启动JVM前先把它关掉。在函数中<a href="http://codingpy.com/article/python-import-101/" target="_blank" rel="noopener">局部导入</a>pyhanlp，在<code>import pyhanlp</code>语句前执行<code>jpype.shutdownJVM()</code>。然而不行，jpype文档的说法是“Because of lack of JVM support, you cannot shutdown the JVM and then restart it.”？？？（介绍python导入的文章说，局部导入没用处，这里处理包冲突的时候不就用到了嘛）</li>
@@ -454,8 +470,7 @@
 <li>杀进程没成功，我又翻到了<code>jpype.addClassPath()</code>这个方法。那么可以修改pyhanlp的初始化代码（虽然改包的代码很不优美），加入判断，如果JVM已启动，就将所需的jar包直接加到class path里。但仍报ClassNotFoundException。查了一下，Java里动态修改class path需要用到反射，且要安全管理器允许，是很tricky的方法。而网上很少有人提及<code>jpype.addClassPath()</code>。</li>
 </ul>
 <p>最后我发现和pyhanlp冲突的是之前用来尝试提取正文，import语句已经变灰的boilerpipe，删掉就好了。。。</p>
-<h1 id="感想">感想</h1>
-<p>这个课题前后做了一个月，其实真正研究的时间除去国庆，剩下时间也只利用了一半吧。一直觉得近期我没有很好地利用这些空闲时间，要努力做些以前想做未做、有意义的事。</p>
+<h1 id="感想"><a href="#感想" class="headerlink" title="感想"></a>感想</h1><p>这个课题前后做了一个月，其实真正研究的时间除去国庆，剩下时间也只利用了一半吧。一直觉得近期我没有很好地利用这些空闲时间，要努力做些以前想做未做、有意义的事。</p>
 <p>完成这个课题的过程让我对问答系统有了基本的了解，熟悉了分词、命名实体识别、词向量等nlp的基本操作，接触了standfordnlp、jieba、pyhanlp、nltk等工具包。python编程方面也练了不少，多进程、tkinter、jpype等等。另外，我尝试使用virtualenv来管理python项目，它使代码和依赖包都集中在一起，不受干扰、方便移植。</p>
 <p>我想，做这些课题，最有价值的是调研各个环节、针对具体情况设计研究方案，并解决落实方案中遇到的困难的过程，还有编程能力的一些锻炼。</p>
 <p>接下来是调好基本信息提取器和实现、调试答案匹配模型的工作，很有意思，可惜课题在此要暂停了。</p>
@@ -654,7 +669,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#引子"><span class="nav-number">1.</span> <span class="nav-text">引子</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#研究方案"><span class="nav-number">2.</span> <span class="nav-text">研究方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#需求"><span class="nav-number">2.1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#答案匹配的基本思路"><span class="nav-number">2.2.</span> <span class="nav-text">答案匹配的基本思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#任务清单"><span class="nav-number">2.3.</span> <span class="nav-text">任务清单</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#研究过程"><span class="nav-number">3.</span> <span class="nav-text">研究过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#网页爬取"><span class="nav-number">3.1.</span> <span class="nav-text">网页爬取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正文提取"><span class="nav-number">3.2.</span> <span class="nav-text">正文提取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简历筛选器"><span class="nav-number">3.3.</span> <span class="nav-text">简历筛选器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本信息提取器"><span class="nav-number">3.4.</span> <span class="nav-text">基本信息提取器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#坑"><span class="nav-number">3.5.</span> <span class="nav-text">坑</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#感想"><span class="nav-number">4.</span> <span class="nav-text">感想</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#引子"><span class="nav-number">1.</span> <span class="nav-text">引子</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#研究方案"><span class="nav-number">2.</span> <span class="nav-text">研究方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#需求"><span class="nav-number">2.1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#答案来源"><span class="nav-number">2.2.</span> <span class="nav-text">答案来源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#答案匹配的基本思路"><span class="nav-number">2.3.</span> <span class="nav-text">答案匹配的基本思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#任务清单"><span class="nav-number">2.4.</span> <span class="nav-text">任务清单</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#研究过程"><span class="nav-number">3.</span> <span class="nav-text">研究过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#网页爬取"><span class="nav-number">3.1.</span> <span class="nav-text">网页爬取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正文提取"><span class="nav-number">3.2.</span> <span class="nav-text">正文提取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简历筛选器"><span class="nav-number">3.3.</span> <span class="nav-text">简历筛选器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本信息提取器"><span class="nav-number">3.4.</span> <span class="nav-text">基本信息提取器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#坑"><span class="nav-number">3.5.</span> <span class="nav-text">坑</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#感想"><span class="nav-number">4.</span> <span class="nav-text">感想</span></a></li></ol></div>
             
 
           </div>
