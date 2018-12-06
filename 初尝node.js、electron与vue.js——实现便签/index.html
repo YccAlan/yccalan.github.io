@@ -104,20 +104,20 @@
 
 
 
-  <meta name="description" content="跨平台GUI方案这个不甚平凡的暑假，小伙伴们有各自的事情要忙。在家实在闲不住，决定学点新东西，就像以往的假期那样。 这回打算学一下桌面GUI开发，想找一个现代化、高效又美观、最好能跨平台的技术学一学。简单调研了一下，当前的跨平台的方案有：  Qt/Qt Quick Java SWT/Java Swing Electron python圈的，如pyQt  一直觉得Qt系列不温不火的，Qt Quick">
+  <meta name="description" content="跨平台GUI方案 这个不甚平凡的暑假，小伙伴们有各自的事情要忙。在家实在闲不住，决定学点新东西，就像以往的假期那样。 这回打算学一下桌面GUI开发，想找一个现代化、高效又美观、最好能跨平台的技术学一学。简单调研了一下，当前的跨平台的方案有： * Qt/Qt Quick * Java SWT/Java Swing * Electron * python圈的，如pyQt 一直觉得Qt系列不温不火">
 <meta name="keywords" content="node.js,前端,笔记,日常">
 <meta property="og:type" content="article">
 <meta property="og:title" content="初尝node.js、electron与vue.js——实现便签">
 <meta property="og:url" content="https://yccalan.github.io/初尝node.js、electron与vue.js——实现便签/index.html">
 <meta property="og:site_name" content="yccalan">
-<meta property="og:description" content="跨平台GUI方案这个不甚平凡的暑假，小伙伴们有各自的事情要忙。在家实在闲不住，决定学点新东西，就像以往的假期那样。 这回打算学一下桌面GUI开发，想找一个现代化、高效又美观、最好能跨平台的技术学一学。简单调研了一下，当前的跨平台的方案有：  Qt/Qt Quick Java SWT/Java Swing Electron python圈的，如pyQt  一直觉得Qt系列不温不火的，Qt Quick">
+<meta property="og:description" content="跨平台GUI方案 这个不甚平凡的暑假，小伙伴们有各自的事情要忙。在家实在闲不住，决定学点新东西，就像以往的假期那样。 这回打算学一下桌面GUI开发，想找一个现代化、高效又美观、最好能跨平台的技术学一学。简单调研了一下，当前的跨平台的方案有： * Qt/Qt Quick * Java SWT/Java Swing * Electron * python圈的，如pyQt 一直觉得Qt系列不温不火">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://yccalan.github.io/初尝node.js、electron与vue.js——实现便签/20180823121813199.png">
 <meta property="og:image" content="https://yccalan.github.io/初尝node.js、electron与vue.js——实现便签/20180823121021700.png">
 <meta property="og:updated_time" content="2018-08-23T03:33:22.688Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="初尝node.js、electron与vue.js——实现便签">
-<meta name="twitter:description" content="跨平台GUI方案这个不甚平凡的暑假，小伙伴们有各自的事情要忙。在家实在闲不住，决定学点新东西，就像以往的假期那样。 这回打算学一下桌面GUI开发，想找一个现代化、高效又美观、最好能跨平台的技术学一学。简单调研了一下，当前的跨平台的方案有：  Qt/Qt Quick Java SWT/Java Swing Electron python圈的，如pyQt  一直觉得Qt系列不温不火的，Qt Quick">
+<meta name="twitter:description" content="跨平台GUI方案 这个不甚平凡的暑假，小伙伴们有各自的事情要忙。在家实在闲不住，决定学点新东西，就像以往的假期那样。 这回打算学一下桌面GUI开发，想找一个现代化、高效又美观、最好能跨平台的技术学一学。简单调研了一下，当前的跨平台的方案有： * Qt/Qt Quick * Java SWT/Java Swing * Electron * python圈的，如pyQt 一直觉得Qt系列不温不火">
 <meta name="twitter:image" content="https://yccalan.github.io/初尝node.js、electron与vue.js——实现便签/20180823121813199.png">
 
 
@@ -383,7 +383,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">2.6k</span>
+                <span title="本文字数">2.7k</span>
               
 
               
@@ -407,60 +407,50 @@
       
 
       
-        <h1 id="跨平台GUI方案"><a href="#跨平台GUI方案" class="headerlink" title="跨平台GUI方案"></a>跨平台GUI方案</h1><p>这个不甚平凡的暑假，小伙伴们有各自的事情要忙。在家实在闲不住，决定学点新东西，就像以往的假期那样。</p>
-<p>这回打算学一下桌面GUI开发，想找一个现代化、高效又美观、最好能跨平台的技术学一学。简单调研了一下，当前的跨平台的方案有：</p>
-<ul>
-<li>Qt/Qt Quick</li>
-<li>Java SWT/Java Swing</li>
-<li>Electron</li>
-<li>python圈的，如pyQt</li>
-</ul>
-<p>一直觉得Qt系列不温不火的，Qt Quick应该是它的发展方向。
-Java的据说比较难写，外观不好处理。
-Electron的代表作应当是vs code，前段时间发现的HexoEditor也让我印象深刻，界面很好看，毕竟是用前端技术写出来的。
-python圈的似乎比较冷门，pyOt也算Qt，其他的一般都用来写“能用就行”的小东西吧。
-此外，直接写个web端也是简单方便的选择。（比如Apache的很多项目）</p>
-<p>总体看来，目前不存在很好的跨平台GUI方案，我能想到原因有：</p>
-<ul>
-<li>平台间的差异必然的，每种系统都发展着自己的特性。作为最难跨平台的部分之一，GUI代码如果大部分能跨平台,操作系统的生态会受到很大冲击，这是一些系统厂商不愿看到的。</li>
-<li>平台特性不同，GUI框架很难对同一份代码适配不同平台上的特性，让编程者自行分别适配也不是好方案，导致GUI框架支持的是各个系统特性的交集，往往比不上用平台工具开发的界面。</li>
-<li>web开发、移动开发是热点，桌面开发已经渐凉，跨平台的桌面开发就更凉了。</li>
-</ul>
+        <h1 id="跨平台gui方案">跨平台GUI方案</h1>
+<p>这个不甚平凡的暑假，小伙伴们有各自的事情要忙。在家实在闲不住，决定学点新东西，就像以往的假期那样。</p>
+<p>这回打算学一下桌面GUI开发，想找一个现代化、高效又美观、最好能跨平台的技术学一学。简单调研了一下，当前的跨平台的方案有： * Qt/Qt Quick * Java SWT/Java Swing * Electron * python圈的，如pyQt</p>
+<p>一直觉得Qt系列不温不火的，Qt Quick应该是它的发展方向。 Java的据说比较难写，外观不好处理。 Electron的代表作应当是vs code，前段时间发现的HexoEditor也让我印象深刻，界面很好看，毕竟是用前端技术写出来的。 python圈的似乎比较冷门，pyOt也算Qt，其他的一般都用来写“能用就行”的小东西吧。 此外，直接写个web端也是简单方便的选择。（比如Apache的很多项目）</p>
+<p>总体看来，目前不存在很好的跨平台GUI方案，我能想到原因有： * 平台间的差异必然的，每种系统都发展着自己的特性。作为最难跨平台的部分之一，GUI代码如果大部分能跨平台,操作系统的生态会受到很大冲击，这是一些系统厂商不愿看到的。 * 平台特性不同，GUI框架很难对同一份代码适配不同平台上的特性，让编程者自行分别适配也不是好方案，导致GUI框架支持的是各个系统特性的交集，往往比不上用平台工具开发的界面。 * web开发、移动开发是热点，桌面开发已经渐凉，跨平台的桌面开发就更凉了。</p>
 <p>所以目前需要跨平台的大工程一般是分别在不同平台上实现界面。其实作为用户，我也更喜欢这样的软件。用跨平台框架写的软件往往体验更差一些，不能很好的利用平台特性，来优化外观、功能、性能等方面。</p>
 <p>上面的方案虽然我基本上接触过，但只是皮毛，就不乱说了，这次的重点是electron。</p>
 <p>我选择electron是因为它是开发方便、界面美观的新技术（相对其他方案），而且也能接触一下node.js。</p>
 <a id="more"></a>
-<h1 id="node-js感受"><a href="#node-js感受" class="headerlink" title="node.js感受"></a>node.js感受</h1><p>node.js是一个js运行环境，相比传统js，它具有模块管理功能，提供了一系列内置模块，用来进行文件I/O、网络操作等等。</p>
+<h1 id="node.js感受">node.js感受</h1>
+<p>node.js是一个js运行环境，相比传统js，它具有模块管理功能，提供了一系列内置模块，用来进行文件I/O、网络操作等等。</p>
 <p>它的语法与js没什么区别，思想也是单线程、事件驱动的。目前主要由于写服务端应用。</p>
-<h1 id="Electron感受"><a href="#Electron感受" class="headerlink" title="Electron感受"></a>Electron感受</h1><p>一个electron项目基本上是把chrome内核和前端页面打包在一起，其中的的js用的是node.js，而执行js和进行网页渲染的是electron。换句话说，electron是把网页包装成桌面应用的程序。</p>
+<h1 id="electron感受">Electron感受</h1>
+<p>一个electron项目基本上是把chrome内核和前端页面打包在一起，其中的的js用的是node.js，而执行js和进行网页渲染的是electron。换句话说，electron是把网页包装成桌面应用的程序。</p>
 <p>electron应用的入口是主进程脚本，语言是node.js，它在后台运行，可以调用api创建新窗口，进行窗口管理等。</p>
 <p>新窗口在新进程中运行，叫渲染进程，也许是因为它有网页渲染器吧。渲染进程的起点是一个html网页文件，不同之处在于，其中的js是node.js，并可以调用electron的一些api。</p>
 <p>基本上，渲染进程执行的代码构成了View层，主进程脚本负责控制、管理等工作，两者通过electron提供的ipc api通信。</p>
 <p>View层基本上是前端代码加上一些electron api的调用。于是，花样繁多的前端技术都可以在此使用。</p>
 <p>既然如此，我顺便体验一下vue.js。</p>
-<h1 id="vue-js感受"><a href="#vue-js感受" class="headerlink" title="vue.js感受"></a>vue.js感受</h1><p>vue.js是一个前端框架，提供数据绑定和组件管理功能。作者是华人尤雨溪，<a href="https://cn.vuejs.org/v2/guide/" target="_blank" rel="noopener">中文文档</a>非常友好。</p>
+<h1 id="vue.js感受">vue.js感受</h1>
+<p>vue.js是一个前端框架，提供数据绑定和组件管理功能。作者是华人尤雨溪，<a href="https://cn.vuejs.org/v2/guide/" target="_blank" rel="noopener">中文文档</a>非常友好。</p>
 <p>没错，这里的数据绑定和MVVM框架中的概念一致。只要对变量进行了修改，vue会根据依赖关系，更新对应的视图。</p>
 <p>组件是把HTML元素进行封装，以便复用。</p>
 <p>vue让前端代码结构分明，非常有条理。</p>
-<h1 id="便签的实现"><a href="#便签的实现" class="headerlink" title="便签的实现"></a>便签的实现</h1><p>对我来说，做一个项目是有趣又有效率的学习方法。</p>
+<h1 id="便签的实现">便签的实现</h1>
+<p>对我来说，做一个项目是有趣又有效率的学习方法。</p>
 <p>这次我做的是一个便签，和windows自带的差不多。</p>
 <p>特性是不会遗失文字，修改后3秒自动保存，自己写的代码很放心。另外可以通过托盘、快捷键显示/隐藏便签，界面还算简洁美观。</p>
-<h2 id="Model层的实现"><a href="#Model层的实现" class="headerlink" title="Model层的实现"></a>Model层的实现</h2><p>我编写了note类，提供增删等方法，使用的是<a href="https://github.com/typicode/lowdb" target="_blank" rel="noopener">lowdb</a>这个简单的、基于json的数据库，反正便签的数据量不大。</p>
-<h2 id="View层的实现"><a href="#View层的实现" class="headerlink" title="View层的实现"></a>View层的实现</h2><p>vue的引入让结构很分明。
-html代码里把便签的外观写出来，js里先用ipc获取便签内容，把数据绑定上去，然后注册点击按钮后的事件处理函数。</p>
+<h2 id="model层的实现">Model层的实现</h2>
+<p>我编写了note类，提供增删等方法，使用的是<a href="https://github.com/typicode/lowdb" target="_blank" rel="noopener">lowdb</a>这个简单的、基于json的数据库，反正便签的数据量不大。</p>
+<h2 id="view层的实现">View层的实现</h2>
+<p>vue的引入让结构很分明。 html代码里把便签的外观写出来，js里先用ipc获取便签内容，把数据绑定上去，然后注册点击按钮后的事件处理函数。</p>
 <p>也许是写得少的原因，感觉写网页样式有点头大。css总写不出想要的效果，对着网页改来改去的，可能是之前用的Android的UI框架太方便了吧。</p>
-<p><img src="/初尝node.js、electron与vue.js——实现便签/20180823121813199.png" alt=""></p>
-<h2 id="主进程脚本的实现"><a href="#主进程脚本的实现" class="headerlink" title="主进程脚本的实现"></a>主进程脚本的实现</h2><p>毕竟是便签，逻辑比较简单。
-启动时展示上次退出时的便签，没有则创建新的。
-然后用ipc监听渲染进程发来的按钮点击消息，做相应处理。
-全局快捷键、托盘图标、上下文菜单之类的，教程写的很清楚（推荐<a href="">这个</a>），api用起来很方便。</p>
-<p>托盘图标素材我是在<a href="https://thenounproject.com/" target="_blank" rel="noopener">Noun Project</a>上找的，自己再p一下，和系统图标很协调哦。
-下图最左边：</p>
-<p><img src="/初尝node.js、electron与vue.js——实现便签/20180823121021700.png" alt=""></p>
-<h2 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h2><p>上边推荐的那个教程讲得很清楚，但是有点旧。。有些代码会报错，比如导入electron模块的写法。</p>
+<p><img src="/初尝node.js、electron与vue.js——实现便签/20180823121813199.png"></p>
+<h2 id="主进程脚本的实现">主进程脚本的实现</h2>
+<p>毕竟是便签，逻辑比较简单。 启动时展示上次退出时的便签，没有则创建新的。 然后用ipc监听渲染进程发来的按钮点击消息，做相应处理。 全局快捷键、托盘图标、上下文菜单之类的，教程写的很清楚（推荐<a href="">这个</a>），api用起来很方便。</p>
+<p>托盘图标素材我是在<a href="https://thenounproject.com/" target="_blank" rel="noopener">Noun Project</a>上找的，自己再p一下，和系统图标很协调哦。 下图最左边：</p>
+<p><img src="/初尝node.js、electron与vue.js——实现便签/20180823121021700.png"></p>
+<h2 id="坑">坑</h2>
+<p>上边推荐的那个教程讲得很清楚，但是有点旧。。有些代码会报错，比如导入electron模块的写法。</p>
 <p>本来想让窗口底色透明，这样便签的样式有更大的设计空间（不规则形状、边缘阴影、半透明等等），但是会造成空闲时的CPU和GPU占用，作为便签小工具总不能太耗电吧。。于是放弃了，这个锅electron要背。</p>
 <p>打包用的是<a href="https://github.com/electron-userland/electron-packager" target="_blank" rel="noopener">electron-packager</a>，要按官方文档来做，流传的教程有些是过时的。</p>
-<h1 id="感想"><a href="#感想" class="headerlink" title="感想"></a>感想</h1><p>概括来说，感觉electron是前端玩具。</p>
+<h1 id="感想">感想</h1>
+<p>概括来说，感觉electron是前端玩具。</p>
 <p>毕竟是个浏览器，框架文件就有100m，和其它GUI框架完全不能比较。内存占用也很大，开一个便签占40m，每加一个再多20m。而一个文件资源浏览器窗口才不到10m啊。。虽说之前有点心理准备，但看到这样的资源占用情况，我还是有些失望的。</p>
 <p>当然，如果是代码量大、内存占用高的程序，框架的消耗就相对能接受了。然而这样的程序一般也不会用electron写界面吧。。功能上electron更适合写小程序，这就挺尴尬的。</p>
 <p>用前端代码写界面还是相当舒服，高效又美观，而且从网页前端迁移过来的学习成本非常低。略知前端皮毛的我学习这三件套、完成这个便签本用了三天时间，可以说很容易上手了。</p>
@@ -663,7 +653,7 @@ html代码里把便签的外观写出来，js里先用ipc获取便签内容，�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#跨平台GUI方案"><span class="nav-number">1.</span> <span class="nav-text">跨平台GUI方案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#node-js感受"><span class="nav-number">2.</span> <span class="nav-text">node.js感受</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Electron感受"><span class="nav-number">3.</span> <span class="nav-text">Electron感受</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vue-js感受"><span class="nav-number">4.</span> <span class="nav-text">vue.js感受</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#便签的实现"><span class="nav-number">5.</span> <span class="nav-text">便签的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Model层的实现"><span class="nav-number">5.1.</span> <span class="nav-text">Model层的实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#View层的实现"><span class="nav-number">5.2.</span> <span class="nav-text">View层的实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主进程脚本的实现"><span class="nav-number">5.3.</span> <span class="nav-text">主进程脚本的实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#坑"><span class="nav-number">5.4.</span> <span class="nav-text">坑</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#感想"><span class="nav-number">6.</span> <span class="nav-text">感想</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#跨平台gui方案"><span class="nav-number">1.</span> <span class="nav-text">跨平台GUI方案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#node.js感受"><span class="nav-number">2.</span> <span class="nav-text">node.js感受</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#electron感受"><span class="nav-number">3.</span> <span class="nav-text">Electron感受</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vue.js感受"><span class="nav-number">4.</span> <span class="nav-text">vue.js感受</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#便签的实现"><span class="nav-number">5.</span> <span class="nav-text">便签的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#model层的实现"><span class="nav-number">5.1.</span> <span class="nav-text">Model层的实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#view层的实现"><span class="nav-number">5.2.</span> <span class="nav-text">View层的实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主进程脚本的实现"><span class="nav-number">5.3.</span> <span class="nav-text">主进程脚本的实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#坑"><span class="nav-number">5.4.</span> <span class="nav-text">坑</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#感想"><span class="nav-number">6.</span> <span class="nav-text">感想</span></a></li></ol></div>
             
 
           </div>
