@@ -112,7 +112,7 @@
 <meta property="og:site_name" content="yccalan">
 <meta property="og:description" content="当初打算建一个Hexo博客的原因之一，是可以方便地添加latex支持。前些天写nlp的课程笔记，需要写公式时，才发现事情要更加复杂。 next主题的latex支持我目前用的next主题，是可以直接配置公式支持，可选择mathjax和katex两种主流插件。 mathjax使用js动态渲染用$标记的latex代码，提供一些交互操作。 katex有js版和css版，next主题支持的是后者。显然，需要">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-19T15:28:08.568Z">
+<meta property="og:updated_time" content="2018-12-19T16:22:34.067Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="渲染 Hexo 博客里的 latex 公式">
 <meta name="twitter:description" content="当初打算建一个Hexo博客的原因之一，是可以方便地添加latex支持。前些天写nlp的课程笔记，需要写公式时，才发现事情要更加复杂。 next主题的latex支持我目前用的next主题，是可以直接配置公式支持，可选择mathjax和katex两种主流插件。 mathjax使用js动态渲染用$标记的latex代码，提供一些交互操作。 katex有js版和css版，next主题支持的是后者。显然，需要">
@@ -336,12 +336,24 @@
                 
               
 
-              <time title="创建时间：2018-12-19 20:57:51 / 修改时间：23:28:08" itemprop="dateCreated datePublished" datetime="2018-12-19T20:57:51+08:00">2018-12-19</time>
+              <time title="创建时间：2018-12-19 20:57:51" itemprop="dateCreated datePublished" datetime="2018-12-19T20:57:51+08:00">2018-12-19</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-12-20 00:22:34" itemprop="dateModified" datetime="2018-12-20T00:22:34+08:00">2018-12-20</time>
               
             
           </span>
@@ -410,7 +422,7 @@ hexo-renderer-kramed渲染器也有缺点，它不支持行内latex公式。解�
 <h1 id="所见即所得的方案"><a href="#所见即所得的方案" class="headerlink" title="所见即所得的方案"></a>所见即所得的方案</h1><p>我研究到这里的时候简直心累，然后想到了我用的markdown编辑器HexoEditor，公式渲染得挺好的，如果博客上也用这个，岂不是做到了所见即所得。</p>
 <p>我去翻github。HexoEditor继承自Moeditor，在Moeditor作者的仓库里真的有一个Hexo渲染器<a href="https://github.com/Moeditor/hexo-renderer-moemark-pygments" target="_blank" rel="noopener">hexo-renderer-moemark-pygments</a>，这个是利用katex的。用npm从git仓库安装依赖很方便：
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm un hexo-renderer-marked --save</span><br><span class="line">npm i https://github.com/Moeditor/hexo-renderer-moemark-pygments.git</span><br></pre></td></tr></table></figure></p>
-<p>配置next主题启用ketax支持后，博客的渲染效果就和HexoEditor里的一致了，是很让我满意的方案了。</p>
+<p>配置next主题启用katex支持后，博客的渲染效果就和HexoEditor里的一致了，是很让我满意的方案了。</p>
 <p>这里有个小坑。next的配置里有个perpage选项，打开后，只对开头声明了<code>mathjax: true</code>的文章启用数学支持。我在换用katex引擎后，声明了<code>katex: true</code>，没有用，还是要写成<code>mathjax: true</code>。。</p>
 <h1 id="选择与妥协"><a href="#选择与妥协" class="headerlink" title="选择与妥协"></a>选择与妥协</h1><p>最后再说几句方案选择的想法。我目前用的是hexo-renderer-moemark-pygments渲染器搭配katex。缺点是katex的数学支持比mathjax弱，而且渲染器支持的是katex 0.7，而最新版已经到了0.10，据next的那篇文档说，Hexo的渲染器都只支持到0.7。</p>
 <p>其它一些mathjax的方案也是值得考虑的（用katex的都有同样的问题）：</p>
@@ -419,7 +431,7 @@ hexo-renderer-kramed渲染器也有缺点，它不支持行内latex公式。解�
 <li>用hexo-renderer-kramed，把行内数学公式写在代码块里。</li>
 </ul>
 <p>为了保证博客与编辑器一致，所见即所得，没遇到问题的话，我会继续用当前的方案。我也给HexoEditor的作者提了issue，建议编辑器直接利用Hexo的渲染器，实现起来可能有点复杂，但这更符合Hexo编辑器的定位：）</p>
-<p>看了许多篇解决Hexo公式渲染的博文，这篇可能是目前最详细、最深究的吧，哈哈。可惜现有方案都存在着一些妥协，希望有大神写一个完美支持latex公式的Hexo渲染器。</p>
+<p><del>看了许多篇解决Hexo公式渲染的博文，这篇可能是目前最详细、最深究的吧，哈哈。</del>可惜现有方案都存在着一些妥协，希望有大神写一个完美支持latex公式的Hexo渲染器。</p>
 
       
     </div>
