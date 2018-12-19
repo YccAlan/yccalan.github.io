@@ -112,7 +112,7 @@
 <meta property="og:site_name" content="yccalan">
 <meta property="og:description" content="当初打算建一个Hexo博客的原因之一，是可以方便地添加latex支持。前些天写nlp的课程笔记，需要写公式时，才发现事情要更加复杂。 next主题的latex支持我目前用的next主题，是可以直接配置公式支持，可选择mathjax和katex两种主流插件。 mathjax使用js动态渲染用$标记的latex代码，提供一些交互操作。 katex有js版和css版，next主题支持的是后者。显然，需要">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-19T15:17:25.242Z">
+<meta property="og:updated_time" content="2018-12-19T15:21:45.121Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="渲染 Hexo 博客里的 latex 公式">
 <meta name="twitter:description" content="当初打算建一个Hexo博客的原因之一，是可以方便地添加latex支持。前些天写nlp的课程笔记，需要写公式时，才发现事情要更加复杂。 next主题的latex支持我目前用的next主题，是可以直接配置公式支持，可选择mathjax和katex两种主流插件。 mathjax使用js动态渲染用$标记的latex代码，提供一些交互操作。 katex有js版和css版，next主题支持的是后者。显然，需要">
@@ -336,7 +336,7 @@
                 
               
 
-              <time title="创建时间：2018-12-19 20:57:51 / 修改时间：23:17:25" itemprop="dateCreated datePublished" datetime="2018-12-19T20:57:51+08:00">2018-12-19</time>
+              <time title="创建时间：2018-12-19 20:57:51 / 修改时间：23:21:45" itemprop="dateCreated datePublished" datetime="2018-12-19T20:57:51+08:00">2018-12-19</time>
             
 
             
@@ -399,22 +399,20 @@
 <h1 id="markdown渲染器的不足"><a href="#markdown渲染器的不足" class="headerlink" title="markdown渲染器的不足"></a>markdown渲染器的不足</h1><p>然而事情没有这么简单，接下来的问题是，hexo的默认渲染器hexo-renderer-marked不支持latex语法，一些latex中的符号会被误认为是markdown语法，比如<code>\</code>、<code>_</code>和<code>*</code>，这让mathjax不能正确地渲染（katex需要渲染器支持，根本不能工作）。粗暴的办法是，写latex公式时，对冲突符号添加markdown转义符号<code>\</code>，这个方法很糟糕，公式书写不便，可移植性也差。或者修改渲染器代码里的正则表达式，改动语法规则，例如去掉markdown里用<code>*</code>强调的语法，参考<a href="https://zhuanlan.zhihu.com/p/33857596" target="_blank" rel="noopener">这篇文章</a>，我也不喜欢这个办法。</p>
 <a id="more"></a>
 <p>我看了不少讨论解决方案的文章，<a href="https://github.com/theme-next/hexo-theme-next/blob/master/docs/MATH.md" target="_blank" rel="noopener">next主题的文档</a>写得最清晰。</p>
-<p>办法就是替换Hexo的渲染器，比如在博客目录下执行：</p>
-<pre><code><div class="highlight"><pre><span class="pl-nx">npm</span> <span class="pl-nx">un</span> <span class="pl-nx">hexo</span><span class="pl-o">-</span><span class="pl-nx">renderer</span><span class="pl-o">-</span><span class="pl-nx">marked</span> <span class="pl-o">--</span><span class="pl-nx">save</span>
-<span class="pl-nx">npm</span> <span class="pl-nx">i</span> <span class="pl-nx">hexo</span><span class="pl-o">-</span><span class="pl-nx">renderer</span><span class="pl-o">-</span><span class="pl-nx">pandoc</span> <span class="pl-o">--</span><span class="pl-nx">save</span> <span class="pl-err">#</span> <span class="pl-nx">or</span> <span class="pl-nx">hexo</span><span class="pl-o">-</span><span class="pl-nx">renderer</span><span class="pl-o">-</span><span class="pl-nx">kramed</span>
-</pre></div>
-</code></pre><p>事情也没有到此为止，切换渲染器并不是无痛的。</p>
+<p>办法就是替换Hexo的渲染器，比如在博客目录下执行：
+    npm un hexo-renderer-marked --save
+    npm i hexo-renderer-pandoc --save # or hexo-renderer-kramed
+事情也没有到此为止，切换渲染器并不是无痛的。</p>
 <p>对于mathjax，可以选择hexo-renderer-pandoc或hexo-renderer-kramed。
 hexo-renderer-pandoc用的是<a href="https://pandoc.org/" target="_blank" rel="noopener">pandoc</a>渲染器，需要先额外地安装它。pandoc是一种特别设计的markdown语法，用它写的文档可以转换成五花八门的格式，该语法天然支持latex。这也意味着pandoc与markdown语法不全相同。
 hexo-renderer-kramed渲染器也有缺点，它不支持行内latex公式。解决办法是有的——和上面一样，要么在行内自己加上转义符号，要么修改渲染规则。渲染器作者建议是用`把公式标注成代码块，参见<a href="https://duskcloudxu.github.io/2018/07/14/hexo-renderer-kramed%E4%B8%8EmathJax%E7%9A%84%E5%85%BC%E5%AE%B9%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" target="_blank" rel="noopener">此处</a>。</p>
 <p>对于katex，可以用hexo-renderer-markdown-it-plus或者hexo-renderer-markdown-it。
 看其他人的使用感受也是不如人意。。。</p>
 <h1 id="所见即所得的方案"><a href="#所见即所得的方案" class="headerlink" title="所见即所得的方案"></a>所见即所得的方案</h1><p>我研究到这里的时候简直心累，然后想到了我用的markdown编辑器HexoEditor，公式渲染得挺好的，如果博客上也用这个，岂不是做到了所见即所得。</p>
-<p>我去翻github。HexoEditor继承自Moeditor，在Moeditor作者的仓库里真的有一个Hexo渲染器<a href="https://github.com/Moeditor/hexo-renderer-moemark-pygments" target="_blank" rel="noopener">hexo-renderer-moemark-pygments</a>，这个是利用katex的。用npm从git仓库安装依赖很方便：</p>
-<pre><code><div class="highlight"><pre><span class="pl-nx">npm</span> <span class="pl-nx">un</span> <span class="pl-nx">hexo</span><span class="pl-o">-</span><span class="pl-nx">renderer</span><span class="pl-o">-</span><span class="pl-nx">marked</span> <span class="pl-o">--</span><span class="pl-nx">save</span>
-<span class="pl-nx">npm</span> <span class="pl-nx">i</span> <span class="pl-nx">https</span><span class="pl-o">:</span><span class="pl-c1">//github.com/Moeditor/hexo-renderer-moemark-pygments.git</span>
-</pre></div>
-</code></pre><p>配置next主题启用ketax支持后，博客的渲染效果就和HexoEditor里的一致了，是很让我满意的方案了。</p>
+<p>我去翻github。HexoEditor继承自Moeditor，在Moeditor作者的仓库里真的有一个Hexo渲染器<a href="https://github.com/Moeditor/hexo-renderer-moemark-pygments" target="_blank" rel="noopener">hexo-renderer-moemark-pygments</a>，这个是利用katex的。用npm从git仓库安装依赖很方便：
+    npm un hexo-renderer-marked --save
+    npm i <a href="https://github.com/Moeditor/hexo-renderer-moemark-pygments.git" target="_blank" rel="noopener">https://github.com/Moeditor/hexo-renderer-moemark-pygments.git</a>
+配置next主题启用ketax支持后，博客的渲染效果就和HexoEditor里的一致了，是很让我满意的方案了。</p>
 <p>这里有个小坑。next的配置里有个perpage选项，打开后，只对开头声明了<code>mathjax: true</code>的文章启用数学支持。我在换用katex引擎后，声明了<code>katex: true</code>，没有用，还是要写成mathjax。。</p>
 <h1 id="选择与妥协"><a href="#选择与妥协" class="headerlink" title="选择与妥协"></a>选择与妥协</h1><p>最后再说几句方案选择的想法。我目前用的是hexo-renderer-moemark-pygments渲染器搭配katex。缺点是katex的数学支持比mathjax弱，而且渲染器支持的是katex 0.7，而最新版已经到了0.10，据next的那篇文档说，Hexo的渲染器都只支持到0.7。</p>
 <p>其它一些mathjax的方案也是值得考虑的（用katex的都有同样的问题）：</p>
