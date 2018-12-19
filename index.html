@@ -290,6 +290,172 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yccalan.github.io/渲染-Hexo-博客里的-latex-公式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yccalan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yccalan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/渲染-Hexo-博客里的-latex-公式/" itemprop="url">
+                  渲染 Hexo 博客里的 latex 公式
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-12-19 20:57:51 / 修改时间：23:17:25" itemprop="dateCreated datePublished" datetime="2018-12-19T20:57:51+08:00">2018-12-19</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">2.1k</span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>当初打算建一个Hexo博客的原因之一，是可以方便地添加latex支持。前些天写nlp的课程笔记，需要写公式时，才发现事情要更加复杂。</p>
+<h1 id="next主题的latex支持"><a href="#next主题的latex支持" class="headerlink" title="next主题的latex支持"></a>next主题的latex支持</h1><p>我目前用的next主题，是可以直接配置公式支持，可选择mathjax和katex两种主流插件。
+<a href="https://www.mathjax.org/" target="_blank" rel="noopener">mathjax</a>使用js动态渲染用<code>$</code>标记的latex代码，提供一些交互操作。
+<a href="https://katex.org/" target="_blank" rel="noopener">katex</a>有js版和css版，next主题支持的是后者。显然，需要先把latex公式渲染成katex对应的html代码，公式才能正确显示。好处是，网页里公式的加载速度更快。另外，相较于mathjax，katex的对latex的语法支持更有限。</p>
+<h1 id="markdown渲染器的不足"><a href="#markdown渲染器的不足" class="headerlink" title="markdown渲染器的不足"></a>markdown渲染器的不足</h1><p>然而事情没有这么简单，接下来的问题是，hexo的默认渲染器hexo-renderer-marked不支持latex语法，一些latex中的符号会被误认为是markdown语法，比如<code>\</code>、<code>_</code>和<code>*</code>，这让mathjax不能正确地渲染（katex需要渲染器支持，根本不能工作）。粗暴的办法是，写latex公式时，对冲突符号添加markdown转义符号<code>\</code>，这个方法很糟糕，公式书写不便，可移植性也差。或者修改渲染器代码里的正则表达式，改动语法规则，例如去掉markdown里用<code>*</code>强调的语法，参考<a href="https://zhuanlan.zhihu.com/p/33857596" target="_blank" rel="noopener">这篇文章</a>，我也不喜欢这个办法。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/渲染-Hexo-博客里的-latex-公式/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yccalan.github.io/Natural-Language-Processing-by-Michael-Collins-小结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1048,7 +1214,7 @@ python圈的似乎比较冷门，pyOt也算Qt，其他的一般都用来写“�
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1073,7 +1239,9 @@ python圈的似乎比较冷门，pyOt也算Qt，其他的一般都用来写“�
                     
                       
                     
-                    <span class="site-state-item-count">5</span>
+                      
+                    
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1278,6 +1446,8 @@ python圈的似乎比较冷门，pyOt也算Qt，其他的一般都用来写“�
 
   
   
+    
+      
     
       
         
