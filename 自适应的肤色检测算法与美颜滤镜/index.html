@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=6.3.0">
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":null,"post_header":null,"post_body":null,"coll_header":null,"sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="最近，我在合作实现一个有美肤、瘦脸功能的美颜滤镜，作为数字图像处理课程的大作业。我负责美肤部分，这几天设计、实现了肤色检测、美白降噪的相关算法，自觉研究了些东西，就写了这篇笔记。 其中的美白降噪部分比较简单，只要调色、滤波就可以了，剩下的是用经验、技巧来改善效果。这篇文章以论述肤色检测为主，课题的其他部分也会有所涉及。 现有的肤色检测算法目前的肤色检测算法有这几类：  简单阈值法。例如，在RGB颜">
+<meta name="keywords" content="笔记,算法,cv">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自适应的肤色检测算法与美颜滤镜">
+<meta property="og:url" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/index.html">
+<meta property="og:site_name" content="yccalan">
+<meta property="og:description" content="最近，我在合作实现一个有美肤、瘦脸功能的美颜滤镜，作为数字图像处理课程的大作业。我负责美肤部分，这几天设计、实现了肤色检测、美白降噪的相关算法，自觉研究了些东西，就写了这篇笔记。 其中的美白降噪部分比较简单，只要调色、滤波就可以了，剩下的是用经验、技巧来改善效果。这篇文章以论述肤色检测为主，课题的其他部分也会有所涉及。 现有的肤色检测算法目前的肤色检测算法有这几类：  简单阈值法。例如，在RGB颜">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190109073845338.png">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190109074525192.png">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190109074426030.png">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190109084641317.png">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190109084739349.png">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190109084822162.png">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190109084848813.png">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190109084716765.png">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190109084901352.png">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190109092041104.png">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190109111549370.png">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190109111416372.png">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190109112921239.png">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190109112902168.png">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190109113141899.png">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190109113129896.png">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190110124426089.png">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190110124447070.png">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190111023712990.png">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190111023857749.png">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190110012540957.png">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190110013710817.png">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190109113141899.png">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190110124426089.png">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190110014340614.png">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190111023712990.png">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190111024506039.png">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190109112921239.png">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190110014526736.png">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190110023933826.png">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190110024118266.png">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190110024800068.png">
+<meta property="og:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190111031755887.png">
+<meta property="og:updated_time" content="2019-01-11T09:06:03.904Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自适应的肤色检测算法与美颜滤镜">
+<meta name="twitter:description" content="最近，我在合作实现一个有美肤、瘦脸功能的美颜滤镜，作为数字图像处理课程的大作业。我负责美肤部分，这几天设计、实现了肤色检测、美白降噪的相关算法，自觉研究了些东西，就写了这篇笔记。 其中的美白降噪部分比较简单，只要调色、滤波就可以了，剩下的是用经验、技巧来改善效果。这篇文章以论述肤色检测为主，课题的其他部分也会有所涉及。 现有的肤色检测算法目前的肤色检测算法有这几类：  简单阈值法。例如，在RGB颜">
+<meta name="twitter:image" content="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/20190109073845338.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>自适应的肤色检测算法与美颜滤镜 | yccalan</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-123284243-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-123284243-1');
+</script>
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">yccalan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yccalan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yccalan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">自适应的肤色检测算法与美颜滤镜
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-08 22:56:53" itemprop="dateCreated datePublished" datetime="2019-01-08T22:56:53+08:00">2019-01-08</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-01-11 17:06:03" itemprop="dateModified" datetime="2019-01-11T17:06:03+08:00">2019-01-11</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">6.2k</span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近，我在合作实现一个有美肤、瘦脸功能的美颜滤镜，作为数字图像处理课程的大作业。我负责美肤部分，这几天设计、实现了肤色检测、美白降噪的相关算法，自觉研究了些东西，就写了这篇笔记。</p>
+<p>其中的美白降噪部分比较简单，只要调色、滤波就可以了，剩下的是用经验、技巧来改善效果。这篇文章以论述肤色检测为主，课题的其他部分也会有所涉及。</p>
+<h1 id="现有的肤色检测算法"><a href="#现有的肤色检测算法" class="headerlink" title="现有的肤色检测算法"></a>现有的肤色检测算法</h1><p>目前的肤色检测算法有这几类：</p>
+<ul>
+<li><strong>简单阈值法。</strong>例如，在RGB颜色空间中划分出皮肤颜色的阈值，或者排除亮度分量，如在YCrCb空间中对Cr、Cb进行筛选。</li>
+<li><strong>自适应阈值法。</strong>例如，在YCrCb空间，对Cr分量做OTSU分割，因为一个人肤色的颜色范围不大嘛。</li>
+<li><strong>颜色建模法。</strong>这是对颜色更进阶的筛选。例如，椭圆模型，因为肤色的Cr、Cb分布图像接近椭圆，把Cr、Cb坐标落入经验椭圆内的像素判定为肤色像素。还有课堂上提到的高斯模型，其实它的分界和椭圆模型是非常接近的。理论上，也可以做更复杂的假设，用更强的模型，但对于颜色特征来说，可能没必要，容易过拟合。</li>
+<li><strong>特征更丰富的复杂模型。</strong>除了一个点颜色值，也可以用一个区域、甚至整幅图像的像素，引入形态学特征、纹理特征等等，这变为一个机器学习问题。</li>
+</ul>
+<p>前三类方法出现得比较多，它们的比较可以参见这篇<a href="https://www.cnblogs.com/skyfsm/p/7868877.html" target="_blank" rel="noopener">文章</a>。用得多是由肤色检测的应用性质决定的，通常对检测的速度要求比较高，甚至需要用于视频实时检测。而对于美颜滤镜这类应用，对精度没有特别高的要求，因为肤色美化是柔和的，被美化区域的边界是羽化的。</p>
+<p>当然，在控制算法复杂度的前提下，肤色检测越准越好。现有的算法准确度是很一般的，那篇对比文章里的效果经过了针对性的参数调整，如果在光照、肤色、拍摄器材各异的现实场景中，将很难找到精准定位皮肤区域又不引入噪声的通用经验模型。</p>
+<p>下图为Cr、Cb阈值法的皮肤检测结果：
+<img src="/自适应的肤色检测算法与美颜滤镜/20190109073845338.png" alt=""></p>
+<p>Cr、Cb阈值法对不同人种的肤色是适用的：
+<img src="/自适应的肤色检测算法与美颜滤镜/20190109074525192.png" alt=""></p>
+<p>但也意味着当背景位于这个较大的肤色范围时，效果的不理想：
+<img src="/自适应的肤色检测算法与美颜滤镜/20190109074426030.png" alt=""></p>
+<h1 id="自适应的肤色检测模型"><a href="#自适应的肤色检测模型" class="headerlink" title="自适应的肤色检测模型"></a>自适应的肤色检测模型</h1><p>现有的肤色检测模型存在着肤色检测范围和背景色误判的矛盾。但对于同一个人来说，他的肤色范围相比人类全体狭窄了很多，如果能针对他的肤色建模，再做筛选，有望大幅提升准确度。</p>
+<p>我们所做的美颜滤镜刚好提供了这一思路的必要条件：美颜滤镜需要用到人脸检测，那么肤色检测模型可以利用人脸像素建模。</p>
+<p>即先对照片做人脸检测，检测结果既用于瘦脸，也用肤色建模，这就在<strong>不增加计算成本的情况下，提升了肤色检测的精度</strong>。</p>
+<h2 id="单人肤色模型的选择"><a href="#单人肤色模型的选择" class="headerlink" title="单人肤色模型的选择"></a>单人肤色模型的选择</h2><p>由于面部像素的数量有限（样本少），而且需要对照片的所有人脸分别建模和检测（计算复杂度不能太高），这就要求一个<strong>简单的</strong>单人肤色模型。</p>
+<blockquote>
+<p>其实，我还有一种思路：收集大量的肤色样本去训练一个较复杂的模型，它以单人的面部像素特征作为输入，输出的是这个人的肤色分布。这种方法需要大样本集和对复杂模型的构建和调试，不是几天工作量的大作业了。</p>
+</blockquote>
+<p>肤色是皮肤的固有性质，与亮度无关，通常在建模时会剔除亮度分量。当然，皮肤的光泽是体现在亮度里的，这里就忽略了。下面是我在YCrCb空间对Cr、Cb分量所作的热力图：
+<img src="/自适应的肤色检测算法与美颜滤镜/20190109084641317.png" alt="">
+<img src="/自适应的肤色检测算法与美颜滤镜/20190109084739349.png" alt=""></p>
+<p><img src="/自适应的肤色检测算法与美颜滤镜/20190109084822162.png" alt="">
+<img src="/自适应的肤色检测算法与美颜滤镜/20190109084848813.png" alt=""></p>
+<p><img src="/自适应的肤色检测算法与美颜滤镜/20190109084716765.png" alt="">
+<img src="/自适应的肤色检测算法与美颜滤镜/20190109084901352.png" alt=""></p>
+<p>可以看到，Cr、Cb分量坐标点的聚集比较紧密，我选择用高斯分布对单人肤色进行建模。</p>
+<h2 id="多元高斯分布的参数估计与概率计算"><a href="#多元高斯分布的参数估计与概率计算" class="headerlink" title="多元高斯分布的参数估计与概率计算"></a>多元高斯分布的参数估计与概率计算</h2><p>极大似然法的高斯分布参数估计式很直觉，就是样本的均值和协方差，即：</p>
+<span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>μ</mi><mo>=</mo><mover accent="true"><mrow><mi>x</mi></mrow><mo>¯</mo></mover></mrow><annotation encoding="application/x-tex">
+\mu=\bar{x}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.56778em;"></span><span class="strut bottom" style="height:0.7622199999999999em;vertical-align:-0.19444em;"></span><span class="base displaystyle textstyle uncramped"><span class="mord mathit">μ</span><span class="mrel">=</span><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord displaystyle textstyle cramped"><span class="mord mathit">x</span></span></span><span style="top:0em;margin-left:0.05556em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>¯</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span></span><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">Σ</mi><mo>=</mo><mi>c</mi><mi>o</mi><mi>v</mi><mo>(</mo><mi>x</mi><mo separator="true">,</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">
+\Sigma=cov(x,x)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base displaystyle textstyle uncramped"><span class="mord mathrm">Σ</span><span class="mrel">=</span><span class="mord mathit">c</span><span class="mord mathit">o</span><span class="mord mathit" style="margin-right:0.03588em;">v</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mpunct">,</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span></span></span><p>于是，我们得到了肤色Cr、Cb分量的高斯分布：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>∼</mo><mi>N</mi><mo>(</mo><mi>μ</mi><mo separator="true">,</mo><mi mathvariant="normal">Σ</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">x\sim N(\mu,\Sigma)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">x</span><span class="mrel">∼</span><span class="mord mathit" style="margin-right:0.10903em;">N</span><span class="mopen">(</span><span class="mord mathit">μ</span><span class="mpunct">,</span><span class="mord mathrm">Σ</span><span class="mclose">)</span></span></span></span>，也就得到了Cr、Cb的概率密度，于是根据像素点的概率密度与分布中心点密度的相对关系估计是否为肤色。这样做比较启发式，既然使用了高斯模型，有没有更直观，可以从概率上解释的筛选准则呢？</p>
+<p>有，这涉及到多元高斯分布的由来。</p>
+<p><img src="/自适应的肤色检测算法与美颜滤镜/20190109092041104.png" alt="">
+先忽略上图的那句话（它已经给出了答案），左图是一个一般的二元变量分布，简单地说（复杂的我也不会说。。），二元高斯分布的假设是：对样本坐标作平移和伸缩变换，使其均值落在原点，沿各个方向的标准差为1（即各分量的方差为1，分量间的协方差为0），此时样本坐标到原点的距离服从标准正态分布：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mo>∼</mo><mi>N</mi><mo>(</mo><mn>0</mn><mo separator="true">,</mo><mn>1</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">d\sim N(0,1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">d</span><span class="mrel">∼</span><span class="mord mathit" style="margin-right:0.10903em;">N</span><span class="mopen">(</span><span class="mord mathrm">0</span><span class="mpunct">,</span><span class="mord mathrm">1</span><span class="mclose">)</span></span></span></span></p>
+<p>那么，对于一个待检测像素(Cr,Cb)，只要根据得到的高斯分布模型的参数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>μ</mi></mrow><annotation encoding="application/x-tex">\mu</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">μ</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">Σ</mi></mrow><annotation encoding="application/x-tex">\Sigma</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">Σ</span></span></span></span>，对它作坐标变换，然后求出到原点的距离，就可以参照标准正态分布的概率表了。</p>
+<p>事实上，(Cr,Cb)坐标与距离的关系并不用推导，答案已经包含在多维高斯分布的概率密度函数中了。</p>
+<p>标准正态分布的概率密度为：</p>
+<span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><msqrt><mrow><mn>2</mn><mi>π</mi></mrow></msqrt></mrow></mfrac><mi>exp</mi><mo>(</mo><mo>−</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><msup><mi>x</mi><mn>2</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">
+f(x)=\frac{1}{\sqrt{2\pi}}\exp(-\frac{1}{2}x^2)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:1.32144em;"></span><span class="strut bottom" style="height:2.25144em;vertical-align:-0.9300000000000002em;"></span><span class="base displaystyle textstyle uncramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mrel">=</span><span class="mord reset-textstyle displaystyle textstyle uncramped"><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span><span class="mfrac"><span class="vlist"><span style="top:0.7972200000000003em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span><span class="reset-textstyle textstyle cramped"><span class="mord textstyle cramped"><span class="sqrt mord"><span class="sqrt-sign" style="top:-0.06722000000000006em;"><span class="style-wrap reset-textstyle textstyle uncramped">√</span></span><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span><span class="mord textstyle cramped"><span class="mord mathrm">2</span><span class="mord mathit" style="margin-right:0.03588em;">π</span></span></span><span style="top:-0.8272200000000001em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span><span class="reset-textstyle textstyle uncramped sqrt-line"></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span>​</span></span></span></span></span></span><span style="top:-0.22999999999999998em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span><span class="reset-textstyle textstyle uncramped frac-line"></span></span><span style="top:-0.677em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span><span class="reset-textstyle textstyle uncramped"><span class="mord textstyle uncramped"><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span>​</span></span></span><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span></span><span class="mop">exp</span><span class="mopen">(</span><span class="mord">−</span><span class="mord reset-textstyle displaystyle textstyle uncramped"><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span><span class="mfrac"><span class="vlist"><span style="top:0.686em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle textstyle cramped"><span class="mord textstyle cramped"><span class="mord mathrm">2</span></span></span></span><span style="top:-0.22999999999999998em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle textstyle uncramped frac-line"></span></span><span style="top:-0.677em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle textstyle uncramped"><span class="mord textstyle uncramped"><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span></span><span class="mord"><span class="mord mathit">x</span><span class="vlist"><span style="top:-0.413em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord mathrm">2</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">)</span></span></span></span></span><p>其中公式前的系数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><msqrt><mrow><mn>2</mn><mi>π</mi></mrow></msqrt></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{1}{\sqrt{2\pi}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.845108em;"></span><span class="strut bottom" style="height:1.395108em;vertical-align:-0.55em;"></span><span class="base textstyle uncramped"><span class="mord reset-textstyle textstyle uncramped"><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span><span class="mfrac"><span class="vlist"><span style="top:0.470554em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="sqrt mord"><span class="sqrt-sign" style="top:-0.08650571428571419em;"><span class="style-wrap reset-scriptstyle scriptstyle uncramped">√</span></span><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1.4285714285714286em;">​</span></span><span class="mord scriptstyle cramped"><span class="mord mathrm">2</span><span class="mord mathit" style="margin-right:0.03588em;">π</span></span></span><span style="top:-0.8293628571428571em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1.4285714285714286em;">​</span></span><span class="reset-scriptstyle textstyle uncramped sqrt-line"></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1.4285714285714286em;">​</span></span>​</span></span></span></span></span></span><span style="top:-0.22999999999999998em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span><span class="reset-textstyle textstyle uncramped frac-line"></span></span><span style="top:-0.394em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span>​</span></span></span><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span></span></span></span></span>使其积分为1。</p>
+<p>多元高斯分布的概率密度为：</p>
+<span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><msqrt><mrow><mi mathvariant="normal">∣</mi><mi mathvariant="normal">Σ</mi><mi mathvariant="normal">∣</mi><mo>(</mo><mn>2</mn><mi>π</mi><msup><mo>)</mo><mi>k</mi></msup></mrow></msqrt></mrow></mfrac><mi>exp</mi><mo>(</mo><mo>−</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mo>(</mo><mi>x</mi><mo>−</mo><mi>μ</mi><msup><mo>)</mo><mi>T</mi></msup><msup><mi mathvariant="normal">Σ</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>(</mo><mi>x</mi><mo>−</mo><mi>μ</mi><mo>)</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">
+f(x)=\frac{1}{\sqrt{\vert\Sigma\vert(2\pi)^k}}\exp(-\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu))
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:1.32144em;"></span><span class="strut bottom" style="height:2.45145em;vertical-align:-1.13001em;"></span><span class="base displaystyle textstyle uncramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mrel">=</span><span class="mord reset-textstyle displaystyle textstyle uncramped"><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span><span class="mfrac"><span class="vlist"><span style="top:0.8375589999999999em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span><span class="reset-textstyle textstyle cramped"><span class="mord textstyle cramped"><span class="sqrt mord"><span class="sqrt-sign" style="top:-0.05755900000000003em;"><span class="style-wrap reset-textstyle textstyle uncramped"><span class="delimsizing size1">√</span></span></span><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span><span class="mord textstyle cramped"><span class="mord mathrm">∣</span><span class="mord mathrm">Σ</span><span class="mord mathrm">∣</span><span class="mopen">(</span><span class="mord mathrm">2</span><span class="mord mathit" style="margin-right:0.03588em;">π</span><span class="mclose"><span class="mclose">)</span><span class="vlist"><span style="top:-0.289em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.03148em;">k</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span><span style="top:-0.867559em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span><span class="reset-textstyle textstyle uncramped sqrt-line"></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span>​</span></span></span></span></span></span><span style="top:-0.22999999999999998em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span><span class="reset-textstyle textstyle uncramped frac-line"></span></span><span style="top:-0.677em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span><span class="reset-textstyle textstyle uncramped"><span class="mord textstyle uncramped"><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span>​</span></span></span><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span></span><span class="mop">exp</span><span class="mopen">(</span><span class="mord">−</span><span class="mord reset-textstyle displaystyle textstyle uncramped"><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span><span class="mfrac"><span class="vlist"><span style="top:0.686em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle textstyle cramped"><span class="mord textstyle cramped"><span class="mord mathrm">2</span></span></span></span><span style="top:-0.22999999999999998em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle textstyle uncramped frac-line"></span></span><span style="top:-0.677em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle textstyle uncramped"><span class="mord textstyle uncramped"><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mbin">−</span><span class="mord mathit">μ</span><span class="mclose"><span class="mclose">)</span><span class="vlist"><span style="top:-0.413em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord mathit" style="margin-right:0.13889em;">T</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mord"><span class="mord mathrm">Σ</span><span class="vlist"><span style="top:-0.41300000000000003em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord">−</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mbin">−</span><span class="mord mathit">μ</span><span class="mclose">)</span><span class="mclose">)</span></span></span></span></span><p>对比两式，按照多元高斯分布的定义，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>x</mi><mo>−</mo><mi>μ</mi><msup><mo>)</mo><mi>T</mi></msup><msup><mi mathvariant="normal">Σ</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>(</mo><mi>x</mi><mo>−</mo><mi>μ</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(x-\mu)^T\Sigma^{-1}(x-\mu)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.8413309999999999em;"></span><span class="strut bottom" style="height:1.0913309999999998em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mopen">(</span><span class="mord mathit">x</span><span class="mbin">−</span><span class="mord mathit">μ</span><span class="mclose"><span class="mclose">)</span><span class="vlist"><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord mathit" style="margin-right:0.13889em;">T</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mord"><span class="mord mathrm">Σ</span><span class="vlist"><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord">−</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mbin">−</span><span class="mord mathit">μ</span><span class="mclose">)</span></span></span></span>就是我们要找的距离的平方。我们寻找的坐标和距离的关系在得到多元高斯分布密度公式的过程中已经推导过了，具体的推导过程，可以参考<a href="https://zhuanlan.zhihu.com/p/36522776" target="_blank" rel="noopener">这篇文章</a>。</p>
+<p>至于为什么归一化系数不一样，这里也解释一下。事实上，我们是根据<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mo>∫</mo><mrow><mo>(</mo><mi>x</mi><mo>−</mo><mi>μ</mi><msup><mo>)</mo><mi>T</mi></msup><msup><mi mathvariant="normal">Σ</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>(</mo><mi>x</mi><mo>−</mo><mi>μ</mi><mo>)</mo><mo>=</mo><msup><mi>d</mi><mn>2</mn></msup></mrow></msub><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mi>d</mi><mi>x</mi><mo>=</mo><mi>f</mi><mo>(</mo><mi>d</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\int\limits_{(x-\mu)^T\Sigma^{-1}(x-\mu)=d^2}f(x)dx=f(d)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.8055600000000002em;"></span><span class="strut bottom" style="height:2.096085em;vertical-align:-1.290525em;"></span><span class="base textstyle uncramped"><span class="mop op-limits"><span class="vlist"><span style="top:1.0155249999999998em;margin-left:-0.19445em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mopen">(</span><span class="mord mathit">x</span><span class="mbin">−</span><span class="mord mathit">μ</span><span class="mclose"><span class="mclose">)</span><span class="vlist"><span style="top:-0.289em;margin-right:0.07142857142857144em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle cramped"><span class="mord mathit" style="margin-right:0.13889em;">T</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mord"><span class="mord mathrm">Σ</span><span class="vlist"><span style="top:-0.289em;margin-right:0.07142857142857144em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle cramped"><span class="mord scriptscriptstyle cramped"><span class="mord">−</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mbin">−</span><span class="mord mathit">μ</span><span class="mclose">)</span><span class="mrel">=</span><span class="mord"><span class="mord mathit">d</span><span class="vlist"><span style="top:-0.289em;margin-right:0.07142857142857144em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle cramped"><span class="mord mathrm">2</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span><span style="top:-0.0005600000000000604em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span><span class="op-symbol small-op mop" style="margin-right:0.19445em;">∫</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mord mathit" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mord mathit">d</span><span class="mord mathit">x</span><span class="mrel">=</span><span class="mord mathit" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathit">d</span><span class="mclose">)</span></span></span></span>解出多元高斯分布的概率密度公式，式中的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">f(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span></span>在积分范围内是常数，因此两式的系数相差<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mo>∫</mo><mrow><mo>(</mo><mi>x</mi><mo>−</mo><mi>μ</mi><msup><mo>)</mo><mi>T</mi></msup><msup><mi mathvariant="normal">Σ</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>(</mo><mi>x</mi><mo>−</mo><mi>μ</mi><mo>)</mo><mo>=</mo><msup><mi>d</mi><mn>2</mn></msup></mrow></msub><mi>d</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">\int\limits_{(x-\mu)^T\Sigma^{-1}(x-\mu)=d^2}dx</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.8055600000000002em;"></span><span class="strut bottom" style="height:2.096085em;vertical-align:-1.290525em;"></span><span class="base textstyle uncramped"><span class="mop op-limits"><span class="vlist"><span style="top:1.0155249999999998em;margin-left:-0.19445em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mopen">(</span><span class="mord mathit">x</span><span class="mbin">−</span><span class="mord mathit">μ</span><span class="mclose"><span class="mclose">)</span><span class="vlist"><span style="top:-0.289em;margin-right:0.07142857142857144em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle cramped"><span class="mord mathit" style="margin-right:0.13889em;">T</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mord"><span class="mord mathrm">Σ</span><span class="vlist"><span style="top:-0.289em;margin-right:0.07142857142857144em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle cramped"><span class="mord scriptscriptstyle cramped"><span class="mord">−</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mbin">−</span><span class="mord mathit">μ</span><span class="mclose">)</span><span class="mrel">=</span><span class="mord"><span class="mord mathit">d</span><span class="vlist"><span style="top:-0.289em;margin-right:0.07142857142857144em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle cramped"><span class="mord mathrm">2</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span><span style="top:-0.0005600000000000604em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span><span class="op-symbol small-op mop" style="margin-right:0.19445em;">∫</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mord mathit">d</span><span class="mord mathit">x</span></span></span></span>倍。这其实是上一段的前提，正因为只是系数的差别，我们才能从多元高斯分布的密度公式中看出坐标与距离的关系。</p>
+<p>于是，我们的模型可以加入一个期望参数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">p</span></span></span></span>，我把它定义为：<strong>如果一个人肤色符合所建立的高斯模型，则他的肤色像素被包含在模型的筛选结果里的比例的期望为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">p</span></span></span></span></strong>。</p>
+<p>对应的筛选条件为：</p>
+<span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>x</mi><mo>−</mo><mi>μ</mi><msup><mo>)</mo><mi>T</mi></msup><msup><mi mathvariant="normal">Σ</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>(</mo><mi>x</mi><mo>−</mo><mi>μ</mi><mo>)</mo><mo>&lt;</mo><mo>(</mo><msup><mi mathvariant="normal">Φ</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>(</mo><mn>1</mn><mo>−</mo><mfrac><mrow><mn>1</mn><mo>−</mo><mi>p</mi></mrow><mrow><mn>2</mn></mrow></mfrac><mo>)</mo><msup><mo>)</mo><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">
+(x-\mu)^T\Sigma^{-1}(x-\mu)&lt;(\Phi^{-1}(1-\frac{1-p}{2}))^2
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:1.32144em;"></span><span class="strut bottom" style="height:2.00744em;vertical-align:-0.686em;"></span><span class="base displaystyle textstyle uncramped"><span class="mopen">(</span><span class="mord mathit">x</span><span class="mbin">−</span><span class="mord mathit">μ</span><span class="mclose"><span class="mclose">)</span><span class="vlist"><span style="top:-0.413em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord mathit" style="margin-right:0.13889em;">T</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mord"><span class="mord mathrm">Σ</span><span class="vlist"><span style="top:-0.41300000000000003em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord">−</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mbin">−</span><span class="mord mathit">μ</span><span class="mclose">)</span><span class="mrel">&lt;</span><span class="mopen">(</span><span class="mord"><span class="mord mathrm">Φ</span><span class="vlist"><span style="top:-0.41300000000000003em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord">−</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathrm">1</span><span class="mbin">−</span><span class="mord reset-textstyle displaystyle textstyle uncramped"><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span><span class="mfrac"><span class="vlist"><span style="top:0.686em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle textstyle cramped"><span class="mord textstyle cramped"><span class="mord mathrm">2</span></span></span></span><span style="top:-0.22999999999999998em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle textstyle uncramped frac-line"></span></span><span style="top:-0.677em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle textstyle uncramped"><span class="mord textstyle uncramped"><span class="mord mathrm">1</span><span class="mbin">−</span><span class="mord mathit">p</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span></span><span class="mclose">)</span><span class="mclose"><span class="mclose">)</span><span class="vlist"><span style="top:-0.413em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord mathrm">2</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span></span><p>这样就有了可以从概率角度解释的筛选标准。</p>
+<h2 id="肤色检测的实现细节"><a href="#肤色检测的实现细节" class="headerlink" title="肤色检测的实现细节"></a>肤色检测的实现细节</h2><p>肤色检测算法的流程如下：</p>
+<ol>
+<li>求取照片的缩略图。</li>
+<li>根据面部特征点的检测结果，确定每张脸的像素范围。</li>
+<li>对于每一张脸，在缩略图上求出脸部肤色的高斯分布作为此人肤色分布的估计，然后根据筛选标准，找出缩略图上所有符合该分布的像素作为此人的皮肤范围。</li>
+<li>求图中所有人的皮肤范围并集，作为检测结果。</li>
+</ol>
+<p>下面介绍几个实现的重点细节。</p>
+<p><strong>面部图像的提取：</strong>由于瘦脸部分需要对面部关键点做变形，所以面部图像就是面部关键点的凸包。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 求面部特征点的凸包，得到面部掩模</span></span><br><span class="line">landmarks = cv2.convexHull(landmarks)</span><br><span class="line">cv2.fillConvexPoly(face_mask, landmarks, <span class="number">1</span>)</span><br><span class="line">face_mask=(face_mask==<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>由于面部图像往往有五官、头发等，我先用较宽松的Cr、Cb阈值做了过滤，然后再剔除距离均值最远的5%的离群像素。</p>
+<p><strong>加速计算：</strong>对原图做提取的速度是很慢的，也没有必要那么精细，我对图像做了两次<code>pyrDown()</code>操作，在1/16的缩略图上做肤色提取。</p>
+<p>肤色检测时，需要判断(Cr,Cb)坐标是否满足不等式约束，涉及矩阵计算，比较耗时。而坐标组合只有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>5</mn><msup><mn>6</mn><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">256^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.8141079999999999em;"></span><span class="strut bottom" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">5</span><span class="mord"><span class="mord mathrm">6</span><span class="vlist"><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord mathrm">2</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>种，因此可以用缓存优化。</p>
+<p><strong>皮肤检测的形态学优化：</strong>检测得到的掩模偶尔有细小颗粒，但皮肤是不会有细小孔洞的，可以用图像的闭运算去除。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 形态学闭运算，消除掩模的细小孔洞</span></span><br><span class="line">skin_mask = cv2.morphologyEx(skin_mask.astype(numpy.uint8), cv2.MORPH_CLOSE,</span><br><span class="line">numpy.ones((<span class="number">3</span>,<span class="number">3</span>), numpy.uint8)).astype(bool)</span><br></pre></td></tr></table></figure>
+<h2 id="自适应肤色高斯模型的效果"><a href="#自适应肤色高斯模型的效果" class="headerlink" title="自适应肤色高斯模型的效果"></a>自适应肤色高斯模型的效果</h2><p>讨论完理论部分，可以来看看模型的效果了。</p>
+<p>下面是单人的肤色检测结果（在1/16的缩略图上执行以加速计算）：
+<img src="/自适应的肤色检测算法与美颜滤镜/20190109111549370.png" alt="">
+<img src="/自适应的肤色检测算法与美颜滤镜/20190109111416372.png" alt=""></p>
+<p><img src="/自适应的肤色检测算法与美颜滤镜/20190109112921239.png" alt="">
+<img src="/自适应的肤色检测算法与美颜滤镜/20190109112902168.png" alt=""></p>
+<p>多人的检测结果是对单人的皮肤区域求并集，如下：
+<img src="/自适应的肤色检测算法与美颜滤镜/20190109113141899.png" alt="">
+<img src="/自适应的肤色检测算法与美颜滤镜/20190109113129896.png" alt=""></p>
+<p><img src="/自适应的肤色检测算法与美颜滤镜/20190110124426089.png" alt="">
+<img src="/自适应的肤色检测算法与美颜滤镜/20190110124447070.png" alt=""></p>
+<p><img src="/自适应的肤色检测算法与美颜滤镜/20190111023712990.png" alt="">
+<img src="/自适应的肤色检测算法与美颜滤镜/20190111023857749.png" alt=""></p>
+<h1 id="美肤算法"><a href="#美肤算法" class="headerlink" title="美肤算法"></a>美肤算法</h1><p>美肤算法包括磨皮和美白，更具体地说就是滤波和调色。这部分的算法比较简单常见，更多是依赖一些参数上的经验技巧。</p>
+<p>我先对整张照片做滤波和调色，包括：</p>
+<ul>
+<li>双边滤波</li>
+<li>高斯滤波</li>
+<li>在YCrCb空间对Y分量做基于幂函数的增强。相比倍数放大或者增加偏移量，幂函数增强不会因为数值溢出而需要做截断，影响对比度。</li>
+</ul>
+<p>滤波和调色加入了强度参数，供用户调节。</p>
+<p>然后依照掩模将处理图和原图拼合，一开始是这样的：
+<img src="/自适应的肤色检测算法与美颜滤镜/20190110012540957.png" alt=""></p>
+<p>没错，要对掩模进行柔化，使美化的皮肤与其它部分平滑过渡，我对掩模做的是均值滤波，把两张图片按掩模权重混合。
+<img src="/自适应的肤色检测算法与美颜滤镜/20190110013710817.png" alt=""></p>
+<p>对照一下原图：
+<img src="/自适应的肤色检测算法与美颜滤镜/20190109113141899.png" alt=""></p>
+<p>肤色相差大的（幂函数曲线对肤色深的人的美白力度大）：
+<img src="/自适应的肤色检测算法与美颜滤镜/20190110124426089.png" alt="">
+<img src="/自适应的肤色检测算法与美颜滤镜/20190110014340614.png" alt=""></p>
+<p>合照（准确美化皮肤区域）：
+<img src="/自适应的肤色检测算法与美颜滤镜/20190111023712990.png" alt="">
+<img src="/自适应的肤色检测算法与美颜滤镜/20190111024506039.png" alt=""></p>
+<p>经典美肤对比图：
+<img src="/自适应的肤色检测算法与美颜滤镜/20190109112921239.png" alt="">
+<img src="/自适应的肤色检测算法与美颜滤镜/20190110014526736.png" alt=""></p>
+<p>在肤色检测、美肤环节有各种阈值、卷积核等参数，我对照着几张样张做了简单的调整，体现出效果就好，毕竟关注点在算法上。</p>
+<h1 id="脸部变形算法"><a href="#脸部变形算法" class="headerlink" title="脸部变形算法"></a>脸部变形算法</h1><p>这部分不是我负责的，这里简述一下原理，毕竟我调了一个bug调到凌晨4点。。</p>
+<p>脸部变形的流程如下：</p>
+<ol>
+<li>提取脸部特征点。我们采用的是dlib库，真是又快又准，感觉我之前的闭眼检测课题也应该用这个。。</li>
+<li>根据用户输入的参数对特征点做坐标变换。</li>
+<li>基于变换前后的两组关键点做图像变换，我们利用的是opencv的TPS变换函数。</li>
+</ol>
+<p>TPS变换时，只输入两组面部特征点是不够的，面部以外的图像也会出现扭曲，所以我们把脸外的一个矩形框上的点也加入特征点约束数组中，以保证图像的扭曲不会超出面部范围，但这也显著增加了特征点的数量，拖慢了计算速度。</p>
+<p>下面是调bug的口水。。</p>
+<p>我调的是只能变换图片中一张脸的bug。因为感觉改起来很简单（大不了分别对每张脸做一次变换嘛），写代码的同学说调不出来，就看了一下。。</p>
+<p>首先我发现眼睛、鼻子等关键点坐标变换函数写错了，导致只能变换数组里第一张脸的坐标，懒得改那么多变换代码，就分别对每张脸的特征点做变换，一起加入特征点数组。</p>
+<p>然而还是不行，带着bug已经调了99%的幻觉（<strong>Debug没有进度，只有调出来了和没调出来</strong>），我把代码左改右改，推翻了一个又一个猜想（特征点太多了？变换幅度太大？变换前后的特征点对不上导致无解？numpy数组的空间布局问题？）,搜遍了资料（关于opencv TPS的文档和讨论很少），终于在第n次怀着“唉，再试最后一次吧”的想法验证猜想时找到了原因：</p>
+<p><strong>opencv TPS变换的关键点不能重复！</strong>它不会自动去重，也不会报错，也不在文档写明，也没人讨论，就返回一张空图让你猜原因！</p>
+<p>完稿后的补充：我们所用的<code>cv2.createThinPlateSplineShapeTransformer()</code>是opencv的内部函数，不是为外部调用准备的。</p>
+<h1 id="UI的编写"><a href="#UI的编写" class="headerlink" title="UI的编写"></a>UI的编写</h1><p>我用Tkinter框架编写了简单的演示UI。</p>
+<p>为了加速计算，展示给用户的效果图是对缩略图的处理结果，保存时再处理原图。（脸部变形算法有点太耗时了。。处理原图要几分钟）</p>
+<p><img src="/自适应的肤色检测算法与美颜滤镜/20190110023933826.png" alt="">
+<img src="/自适应的肤色检测算法与美颜滤镜/20190110024118266.png" alt="">
+<img src="/自适应的肤色检测算法与美颜滤镜/20190110024800068.png" alt=""></p>
+<h1 id="python项目打包"><a href="#python项目打包" class="headerlink" title="python项目打包"></a>python项目打包</h1><p>这部分介绍开发环境的打包和可执行程序的打包。</p>
+<p>为了方便小组在不同电脑上开发，我们使用了venv虚拟环境，把所有依赖和代码都集成在虚拟环境中。然而，转移工程时还是遇到了问题。</p>
+<p>经过摸索，在新电脑上用pycharm跑起开发环境的方法是：</p>
+<ol>
+<li>安装对应的python版本（32位和64位也要区别开，因为很多很多依赖是C/C++写的）。</li>
+<li>修改venv目录下的pyvenv.cfg，使home变量指向对应的python解释器。</li>
+<li>有可能需要配置pycharm项目设置里的python解释器路径。</li>
+</ol>
+<p><img src="/自适应的肤色检测算法与美颜滤镜/20190111031755887.png" alt=""></p>
+<p>这种方法能让pycharm识别虚拟环境、运行程序，但在虚拟环境内依赖的安装、以及可执行程序的打包都可能遇到问题（我就遇到了。。）。</p>
+<p>事实上，虚拟环境是用来<strong>隔离一台电脑上的不同项目对python解释器和包的依赖</strong>的，它们不是为了方便不同电脑间的项目迁移而设计的。</p>
+<p>正确的迁移姿势应该是复制源码并导出依赖，即<code>requirements.txt</code>，然后在新电脑上搭建环境。如果有网络问题，可选择国内镜像或者离线安装。环境迁移的讨论可以参考<a href="https://www.jianshu.com/p/28b64c050f42" target="_blank" rel="noopener">这篇文章</a>。如果要部署到生产环境，也可以使用docker容器。</p>
+<p>我使用pyinstaller进行可执行程序的打包，可以参考<a href="https://blog.csdn.net/zengxiantao1994/article/details/76578421" target="_blank" rel="noopener">这篇文章</a>。</p>
+<p>如果要打包其它文件（自己的pyd、模型权重、图片等等），可以在pyinstaller参数中指明。更简单的方法是直接复制到打包生成的文件夹里，因为可执行程序的工作目录就在那里。但如果选择生成单个exe的话，用参数指定的额外文件的位置需要在运行时获取，详见<a href="https://www.cnblogs.com/darcymei/p/9397173.html" target="_blank" rel="noopener">这里</a>。</p>
+<h1 id="体会"><a href="#体会" class="headerlink" title="体会"></a>体会</h1><p>若干个python项目做下来，对python的包管理要有心理阴影了。原因大概根植于python的胶水语言定位，大量依赖是用C/C++编写的，安装时需要在用户的电脑上编译，这就要配置各种编译环境，导致安装过程容易出现意外错误。cpython的各个版本也不全兼容，项目的依赖包耦合于开发者的cpu架构、操作系统、python版本、甚至环境变量，导致迁移困难、安装费劲。听说conda的包管理集成了编译工具链，尽管更笨重，也没解决环境迁移问题，但简化了依赖的安装过程，值得尝试。</p>
+<p>不过，python代码越写越顺了，numpy的语法糖挺甜的，但我有点怕有坑，会在调试时看看是不是按自己想象的那样执行。。</p>
+<p>最后，针对具体问题，设计、实现自己的算法真是非常有趣。巧妙的思路会让我兴奋，实现算法也和写网站的公式代码不同，每行代码背后都体现着自己的想法。当然，算法实现离不开工程的优化，而编写有创意的程序也一样有趣。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/笔记/" rel="tag"># 笔记</a>
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+            <a href="/tags/cv/" rel="tag"># cv</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/渲染-Hexo-博客里的-latex-公式/" rel="next" title="渲染 Hexo 博客里的 latex 公式">
+                <i class="fa fa-chevron-left"></i> 渲染 Hexo 博客里的 latex 公式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="yccalan" />
+            
+              <p class="site-author-name" itemprop="name">yccalan</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#现有的肤色检测算法"><span class="nav-number">1.</span> <span class="nav-text">现有的肤色检测算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自适应的肤色检测模型"><span class="nav-number">2.</span> <span class="nav-text">自适应的肤色检测模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#单人肤色模型的选择"><span class="nav-number">2.1.</span> <span class="nav-text">单人肤色模型的选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多元高斯分布的参数估计与概率计算"><span class="nav-number">2.2.</span> <span class="nav-text">多元高斯分布的参数估计与概率计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#肤色检测的实现细节"><span class="nav-number">2.3.</span> <span class="nav-text">肤色检测的实现细节</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自适应肤色高斯模型的效果"><span class="nav-number">2.4.</span> <span class="nav-text">自适应肤色高斯模型的效果</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#美肤算法"><span class="nav-number">3.</span> <span class="nav-text">美肤算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#脸部变形算法"><span class="nav-number">4.</span> <span class="nav-text">脸部变形算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UI的编写"><span class="nav-number">5.</span> <span class="nav-text">UI的编写</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#python项目打包"><span class="nav-number">6.</span> <span class="nav-text">python项目打包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#体会"><span class="nav-number">7.</span> <span class="nav-text">体会</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yccalan</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Pisces</a></div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/';
+        this.page.identifier = '自适应的肤色检测算法与美颜滤镜/';
+        this.page.title = '自适应的肤色检测算法与美颜滤镜';
+        };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://yccalan-blog-github.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        loadComments();
+      
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0.7.1/dist/katex.min.css" type="text/css">
+
+   
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -290,7 +290,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yccalan.github.io/20190108225653/">
+    <link itemprop="mainEntityOfPage" href="https://yccalan.github.io/自适应的肤色检测算法与美颜滤镜/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yccalan">
@@ -309,7 +309,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/20190108225653/" itemprop="url">
+                <a class="post-title-link" href="/自适应的肤色检测算法与美颜滤镜/" itemprop="url">
                   自适应的肤色检测算法与美颜滤镜
                 </a>
               
@@ -353,7 +353,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-01-11 17:01:08" itemprop="dateModified" datetime="2019-01-11T17:01:08+08:00">2019-01-11</time>
+                <time title="修改时间：2019-01-11 17:06:03" itemprop="dateModified" datetime="2019-01-11T17:06:03+08:00">2019-01-11</time>
               
             
           </span>
@@ -418,11 +418,11 @@
 <p>前三类方法出现得比较多，它们的比较可以参见这篇<a href="https://www.cnblogs.com/skyfsm/p/7868877.html" target="_blank" rel="noopener">文章</a>。用得多是由肤色检测的应用性质决定的，通常对检测的速度要求比较高，甚至需要用于视频实时检测。而对于美颜滤镜这类应用，对精度没有特别高的要求，因为肤色美化是柔和的，被美化区域的边界是羽化的。</p>
 <p>当然，在控制算法复杂度的前提下，肤色检测越准越好。现有的算法准确度是很一般的，那篇对比文章里的效果经过了针对性的参数调整，如果在光照、肤色、拍摄器材各异的现实场景中，将很难找到精准定位皮肤区域又不引入噪声的通用经验模型。</p>
 <p>下图为Cr、Cb阈值法的皮肤检测结果：
-<img src="/20190108225653/20190109073845338.png" alt=""></p>
+<img src="/自适应的肤色检测算法与美颜滤镜/20190109073845338.png" alt=""></p>
 <p>Cr、Cb阈值法对不同人种的肤色是适用的：
-<img src="/20190108225653/20190109074525192.png" alt=""></p>
+<img src="/自适应的肤色检测算法与美颜滤镜/20190109074525192.png" alt=""></p>
 <p>但也意味着当背景位于这个较大的肤色范围时，效果的不理想：
-<img src="/20190108225653/20190109074426030.png" alt=""></p>
+<img src="/自适应的肤色检测算法与美颜滤镜/20190109074426030.png" alt=""></p>
 <h1 id="自适应的肤色检测模型"><a href="#自适应的肤色检测模型" class="headerlink" title="自适应的肤色检测模型"></a>自适应的肤色检测模型</h1><p>现有的肤色检测模型存在着肤色检测范围和背景色误判的矛盾。但对于同一个人来说，他的肤色范围相比人类全体狭窄了很多，如果能针对他的肤色建模，再做筛选，有望大幅提升准确度。</p>
 <p>我们所做的美颜滤镜刚好提供了这一思路的必要条件：美颜滤镜需要用到人脸检测，那么肤色检测模型可以利用人脸像素建模。</p>
 <p>即先对照片做人脸检测，检测结果既用于瘦脸，也用肤色建模，这就在<strong>不增加计算成本的情况下，提升了肤色检测的精度</strong>。</p>
@@ -431,12 +431,12 @@
 <p>其实，我还有一种思路：收集大量的肤色样本去训练一个较复杂的模型，它以单人的面部像素特征作为输入，输出的是这个人的肤色分布。这种方法需要大样本集和对复杂模型的构建和调试，不是几天工作量的大作业了。</p>
 </blockquote>
 <p>肤色是皮肤的固有性质，与亮度无关，通常在建模时会剔除亮度分量。当然，皮肤的光泽是体现在亮度里的，这里就忽略了。下面是我在YCrCb空间对Cr、Cb分量所作的热力图：
-<img src="/20190108225653/20190109084641317.png" alt="">
-<img src="/20190108225653/20190109084739349.png" alt=""></p>
-<p><img src="/20190108225653/20190109084822162.png" alt="">
-<img src="/20190108225653/20190109084848813.png" alt=""></p>
-<p><img src="/20190108225653/20190109084716765.png" alt="">
-<img src="/20190108225653/20190109084901352.png" alt=""></p>
+<img src="/自适应的肤色检测算法与美颜滤镜/20190109084641317.png" alt="">
+<img src="/自适应的肤色检测算法与美颜滤镜/20190109084739349.png" alt=""></p>
+<p><img src="/自适应的肤色检测算法与美颜滤镜/20190109084822162.png" alt="">
+<img src="/自适应的肤色检测算法与美颜滤镜/20190109084848813.png" alt=""></p>
+<p><img src="/自适应的肤色检测算法与美颜滤镜/20190109084716765.png" alt="">
+<img src="/自适应的肤色检测算法与美颜滤镜/20190109084901352.png" alt=""></p>
 <p>可以看到，Cr、Cb分量坐标点的聚集比较紧密，我选择用高斯分布对单人肤色进行建模。</p>
 <h2 id="多元高斯分布的参数估计与概率计算"><a href="#多元高斯分布的参数估计与概率计算" class="headerlink" title="多元高斯分布的参数估计与概率计算"></a>多元高斯分布的参数估计与概率计算</h2><p>极大似然法的高斯分布参数估计式很直觉，就是样本的均值和协方差，即：</p>
 <span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>μ</mi><mo>=</mo><mover accent="true"><mrow><mi>x</mi></mrow><mo>¯</mo></mover></mrow><annotation encoding="application/x-tex">
@@ -445,7 +445,7 @@
 \Sigma=cov(x,x)
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base displaystyle textstyle uncramped"><span class="mord mathrm">Σ</span><span class="mrel">=</span><span class="mord mathit">c</span><span class="mord mathit">o</span><span class="mord mathit" style="margin-right:0.03588em;">v</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mpunct">,</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span></span></span><p>于是，我们得到了肤色Cr、Cb分量的高斯分布：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>∼</mo><mi>N</mi><mo>(</mo><mi>μ</mi><mo separator="true">,</mo><mi mathvariant="normal">Σ</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">x\sim N(\mu,\Sigma)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">x</span><span class="mrel">∼</span><span class="mord mathit" style="margin-right:0.10903em;">N</span><span class="mopen">(</span><span class="mord mathit">μ</span><span class="mpunct">,</span><span class="mord mathrm">Σ</span><span class="mclose">)</span></span></span></span>，也就得到了Cr、Cb的概率密度，于是根据像素点的概率密度与分布中心点密度的相对关系估计是否为肤色。这样做比较启发式，既然使用了高斯模型，有没有更直观，可以从概率上解释的筛选准则呢？</p>
 <p>有，这涉及到多元高斯分布的由来。</p>
-<p><img src="/20190108225653/20190109092041104.png" alt="">
+<p><img src="/自适应的肤色检测算法与美颜滤镜/20190109092041104.png" alt="">
 先忽略上图的那句话（它已经给出了答案），左图是一个一般的二元变量分布，简单地说（复杂的我也不会说。。），二元高斯分布的假设是：对样本坐标作平移和伸缩变换，使其均值落在原点，沿各个方向的标准差为1（即各分量的方差为1，分量间的协方差为0），此时样本坐标到原点的距离服从标准正态分布：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mo>∼</mo><mi>N</mi><mo>(</mo><mn>0</mn><mo separator="true">,</mo><mn>1</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">d\sim N(0,1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">d</span><span class="mrel">∼</span><span class="mord mathit" style="margin-right:0.10903em;">N</span><span class="mopen">(</span><span class="mord mathrm">0</span><span class="mpunct">,</span><span class="mord mathrm">1</span><span class="mclose">)</span></span></span></span></p>
 <p>那么，对于一个待检测像素(Cr,Cb)，只要根据得到的高斯分布模型的参数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>μ</mi></mrow><annotation encoding="application/x-tex">\mu</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">μ</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">Σ</mi></mrow><annotation encoding="application/x-tex">\Sigma</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">Σ</span></span></span></span>，对它作坐标变换，然后求出到原点的距离，就可以参照标准正态分布的概率表了。</p>
 <p>事实上，(Cr,Cb)坐标与距离的关系并不用推导，答案已经包含在多维高斯分布的概率密度函数中了。</p>
@@ -480,17 +480,17 @@ f(x)=\frac{1}{\sqrt{\vert\Sigma\vert(2\pi)^k}}\exp(-\frac{1}{2}(x-\mu)^T\Sigma^{
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 形态学闭运算，消除掩模的细小孔洞</span></span><br><span class="line">skin_mask = cv2.morphologyEx(skin_mask.astype(numpy.uint8), cv2.MORPH_CLOSE,</span><br><span class="line">numpy.ones((<span class="number">3</span>,<span class="number">3</span>), numpy.uint8)).astype(bool)</span><br></pre></td></tr></table></figure>
 <h2 id="自适应肤色高斯模型的效果"><a href="#自适应肤色高斯模型的效果" class="headerlink" title="自适应肤色高斯模型的效果"></a>自适应肤色高斯模型的效果</h2><p>讨论完理论部分，可以来看看模型的效果了。</p>
 <p>下面是单人的肤色检测结果（在1/16的缩略图上执行以加速计算）：
-<img src="/20190108225653/20190109111549370.png" alt="">
-<img src="/20190108225653/20190109111416372.png" alt=""></p>
-<p><img src="/20190108225653/20190109112921239.png" alt="">
-<img src="/20190108225653/20190109112902168.png" alt=""></p>
+<img src="/自适应的肤色检测算法与美颜滤镜/20190109111549370.png" alt="">
+<img src="/自适应的肤色检测算法与美颜滤镜/20190109111416372.png" alt=""></p>
+<p><img src="/自适应的肤色检测算法与美颜滤镜/20190109112921239.png" alt="">
+<img src="/自适应的肤色检测算法与美颜滤镜/20190109112902168.png" alt=""></p>
 <p>多人的检测结果是对单人的皮肤区域求并集，如下：
-<img src="/20190108225653/20190109113141899.png" alt="">
-<img src="/20190108225653/20190109113129896.png" alt=""></p>
-<p><img src="/20190108225653/20190110124426089.png" alt="">
-<img src="/20190108225653/20190110124447070.png" alt=""></p>
-<p><img src="/20190108225653/20190111023712990.png" alt="">
-<img src="/20190108225653/20190111023857749.png" alt=""></p>
+<img src="/自适应的肤色检测算法与美颜滤镜/20190109113141899.png" alt="">
+<img src="/自适应的肤色检测算法与美颜滤镜/20190109113129896.png" alt=""></p>
+<p><img src="/自适应的肤色检测算法与美颜滤镜/20190110124426089.png" alt="">
+<img src="/自适应的肤色检测算法与美颜滤镜/20190110124447070.png" alt=""></p>
+<p><img src="/自适应的肤色检测算法与美颜滤镜/20190111023712990.png" alt="">
+<img src="/自适应的肤色检测算法与美颜滤镜/20190111023857749.png" alt=""></p>
 <h1 id="美肤算法"><a href="#美肤算法" class="headerlink" title="美肤算法"></a>美肤算法</h1><p>美肤算法包括磨皮和美白，更具体地说就是滤波和调色。这部分的算法比较简单常见，更多是依赖一些参数上的经验技巧。</p>
 <p>我先对整张照片做滤波和调色，包括：</p>
 <ul>
@@ -500,20 +500,20 @@ f(x)=\frac{1}{\sqrt{\vert\Sigma\vert(2\pi)^k}}\exp(-\frac{1}{2}(x-\mu)^T\Sigma^{
 </ul>
 <p>滤波和调色加入了强度参数，供用户调节。</p>
 <p>然后依照掩模将处理图和原图拼合，一开始是这样的：
-<img src="/20190108225653/20190110012540957.png" alt=""></p>
+<img src="/自适应的肤色检测算法与美颜滤镜/20190110012540957.png" alt=""></p>
 <p>没错，要对掩模进行柔化，使美化的皮肤与其它部分平滑过渡，我对掩模做的是均值滤波，把两张图片按掩模权重混合。
-<img src="/20190108225653/20190110013710817.png" alt=""></p>
+<img src="/自适应的肤色检测算法与美颜滤镜/20190110013710817.png" alt=""></p>
 <p>对照一下原图：
-<img src="/20190108225653/20190109113141899.png" alt=""></p>
+<img src="/自适应的肤色检测算法与美颜滤镜/20190109113141899.png" alt=""></p>
 <p>肤色相差大的（幂函数曲线对肤色深的人的美白力度大）：
-<img src="/20190108225653/20190110124426089.png" alt="">
-<img src="/20190108225653/20190110014340614.png" alt=""></p>
+<img src="/自适应的肤色检测算法与美颜滤镜/20190110124426089.png" alt="">
+<img src="/自适应的肤色检测算法与美颜滤镜/20190110014340614.png" alt=""></p>
 <p>合照（准确美化皮肤区域）：
-<img src="/20190108225653/20190111023712990.png" alt="">
-<img src="/20190108225653/20190111024506039.png" alt=""></p>
+<img src="/自适应的肤色检测算法与美颜滤镜/20190111023712990.png" alt="">
+<img src="/自适应的肤色检测算法与美颜滤镜/20190111024506039.png" alt=""></p>
 <p>经典美肤对比图：
-<img src="/20190108225653/20190109112921239.png" alt="">
-<img src="/20190108225653/20190110014526736.png" alt=""></p>
+<img src="/自适应的肤色检测算法与美颜滤镜/20190109112921239.png" alt="">
+<img src="/自适应的肤色检测算法与美颜滤镜/20190110014526736.png" alt=""></p>
 <p>在肤色检测、美肤环节有各种阈值、卷积核等参数，我对照着几张样张做了简单的调整，体现出效果就好，毕竟关注点在算法上。</p>
 <h1 id="脸部变形算法"><a href="#脸部变形算法" class="headerlink" title="脸部变形算法"></a>脸部变形算法</h1><p>这部分不是我负责的，这里简述一下原理，毕竟我调了一个bug调到凌晨4点。。</p>
 <p>脸部变形的流程如下：</p>
@@ -531,9 +531,9 @@ f(x)=\frac{1}{\sqrt{\vert\Sigma\vert(2\pi)^k}}\exp(-\frac{1}{2}(x-\mu)^T\Sigma^{
 <p>完稿后的补充：我们所用的<code>cv2.createThinPlateSplineShapeTransformer()</code>是opencv的内部函数，不是为外部调用准备的。</p>
 <h1 id="UI的编写"><a href="#UI的编写" class="headerlink" title="UI的编写"></a>UI的编写</h1><p>我用Tkinter框架编写了简单的演示UI。</p>
 <p>为了加速计算，展示给用户的效果图是对缩略图的处理结果，保存时再处理原图。（脸部变形算法有点太耗时了。。处理原图要几分钟）</p>
-<p><img src="/20190108225653/20190110023933826.png" alt="">
-<img src="/20190108225653/20190110024118266.png" alt="">
-<img src="/20190108225653/20190110024800068.png" alt=""></p>
+<p><img src="/自适应的肤色检测算法与美颜滤镜/20190110023933826.png" alt="">
+<img src="/自适应的肤色检测算法与美颜滤镜/20190110024118266.png" alt="">
+<img src="/自适应的肤色检测算法与美颜滤镜/20190110024800068.png" alt=""></p>
 <h1 id="python项目打包"><a href="#python项目打包" class="headerlink" title="python项目打包"></a>python项目打包</h1><p>这部分介绍开发环境的打包和可执行程序的打包。</p>
 <p>为了方便小组在不同电脑上开发，我们使用了venv虚拟环境，把所有依赖和代码都集成在虚拟环境中。然而，转移工程时还是遇到了问题。</p>
 <p>经过摸索，在新电脑上用pycharm跑起开发环境的方法是：</p>
@@ -542,7 +542,7 @@ f(x)=\frac{1}{\sqrt{\vert\Sigma\vert(2\pi)^k}}\exp(-\frac{1}{2}(x-\mu)^T\Sigma^{
 <li>修改venv目录下的pyvenv.cfg，使home变量指向对应的python解释器。</li>
 <li>有可能需要配置pycharm项目设置里的python解释器路径。</li>
 </ol>
-<p><img src="/20190108225653/20190111031755887.png" alt=""></p>
+<p><img src="/自适应的肤色检测算法与美颜滤镜/20190111031755887.png" alt=""></p>
 <p>这种方法能让pycharm识别虚拟环境、运行程序，但在虚拟环境内依赖的安装、以及可执行程序的打包都可能遇到问题（我就遇到了。。）。</p>
 <p>事实上，虚拟环境是用来<strong>隔离一台电脑上的不同项目对python解释器和包的依赖</strong>的，它们不是为了方便不同电脑间的项目迁移而设计的。</p>
 <p>正确的迁移姿势应该是复制源码并导出依赖，即<code>requirements.txt</code>，然后在新电脑上搭建环境。如果有网络问题，可选择国内镜像或者离线安装。环境迁移的讨论可以参考<a href="https://www.jianshu.com/p/28b64c050f42" target="_blank" rel="noopener">这篇文章</a>。如果要部署到生产环境，也可以使用docker容器。</p>
